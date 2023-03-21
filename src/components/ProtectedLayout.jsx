@@ -5,7 +5,8 @@ import { getUserLocalStorage } from "../context/AuthProvider/util";
 export const ProtectedLayout = ({children}) => {
     const user = getUserLocalStorage()
 
-    if(!user){
+    
+    if(!user || user == "null"){
        
        return <Navigate to="/signin"/>;
     }
