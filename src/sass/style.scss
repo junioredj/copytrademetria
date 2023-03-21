@@ -1,0 +1,25 @@
+//Conf
+@import './mixins';
+@import './variables.scss';
+@import './pattern';
+@import './base/reset';
+
+//Components
+@import './components/button';
+@import './components/header';
+@import './components/redefinedPasswordForm';
+@import './components/dropdownProfile';
+@import './components/dropdownReports';
+@import './components/dashResume';
+@import './components/dashStatistic';
+@import './components/filter-form';
+
+//Pages
+@import './pages/signin_and_signup';
+@import './pages/dashboard';
+@import './pages/page-profile';
+@import './pages/page-imports';
+
+@import './pages/Reports/reports-patterns';
+@import './pages/Reports/trades';
+

@@ -1,0 +1,93 @@
+.dashboard_app{
+    .atalho-relatorios{  
+        padding: 2rem 0;
+
+        .container{
+            @include flex(column, flex-start, flex-start);
+        }
+
+        .atalho-content{
+            @include flex(row, flex-start, flex-start);
+            gap: 1.2rem;
+            width: 100%;
+            margin: 2rem auto 0;
+
+            flex-wrap: wrap;
+
+            a{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: .6rem;
+                padding: 1rem;
+                height: 3.7rem;
+                background: $gray-dark-200;
+                border-radius: 4px;
+
+                flex: 1 1 23.3rem;
+                align-self: stretch;
+
+                &:hover{
+                    background: $gray-dark-500;                    
+                }
+
+                span{
+                    font-size: 1.4rem;
+                    line-height: 1.9rem;
+                    color: $white-color;
+                }
+            }
+        }
+    }
+    
+    .dash-resume{
+        display: flex;
+        margin-top: 1rem;
+
+        .dash-result{
+            width: 100%;
+            margin: 0 auto;
+
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+    }
+
+    .dash-chart{
+        margin-bottom: 2rem;
+        .container{
+            @include flex(column, center, center);
+            gap: 4rem;
+        }
+        .content{
+            width: 100%;
+            border-radius: .4rem;
+            padding: 2.4rem;
+            gap: 2.4rem;
+
+            background: $gray-dark-500;
+
+            .chart-content{
+                width: 100%;
+                height: 100%;
+                
+                .apexcharts-tooltip {
+                    border: 0;
+                    background: $gray-dark-500;
+                    color: $white-color;
+
+                    .apexcharts-tooltip-title{
+                        background: $gray-dark-200;
+                        color: $white-color;
+                    }
+                }
+                .apexcharts-xaxistooltip{
+                    background-color: $gray-dark-100;
+                    color: $white-color;
+                    border: 0;
+                }   
+            }
+        }
+    }
+}

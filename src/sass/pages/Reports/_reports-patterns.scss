@@ -1,0 +1,26 @@
+.card-box{
+    border-radius: 4px;
+    background: #37404a;
+    padding: 2.4rem;
+    margin-top: 2rem;
+
+    .box-title{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 1.2rem;
+        gap: 1rem;
+        background: #464F5B;
+        border-radius: 4px;
+
+        h6{
+            font-size: 1.6rem;
+            line-height: 2.2rem;
+            text-transform: uppercase;
+            color: #AAB8C5;
+        }
+    }
+    .box-content{
+        padding: 2rem 0;
+    }
+}

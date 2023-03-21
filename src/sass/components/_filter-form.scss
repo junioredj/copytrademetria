@@ -1,0 +1,28 @@
+.filter-form{
+    .row{
+        @include flex(row, center, space-between);
+        gap: 1.2rem;
+
+        &:not(:first-child){
+            margin-top: 1.6rem;
+        }
+
+        select,input{
+            background-color: $gray-dark-100;
+            color: $gray-light-400;
+            width: 100%;
+            height: 3.7rem;
+            padding: .7rem 1.4rem;
+            border-radius: .4rem;
+            outline: none;
+        }
+    }
+}
+
+@include responsive(800px){
+    .filter-form{
+        .row{
+            flex-direction: column;
+        }
+    }
+}

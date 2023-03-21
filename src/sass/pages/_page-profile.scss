@@ -1,0 +1,131 @@
+.s-profile{
+    min-height: calc(100vh - 172px);
+    
+    .container{
+        @include flex(column, flex-start, flex-start);
+        gap: 2rem;
+    }
+    
+    .user-edit{
+        @include flex(row, flex-start, flex-start);
+        gap: 1.2rem;
+        width: 100%;
+        flex-wrap: wrap;
+
+        .left-area{
+            @include flex(column, center, center);
+            gap: 1rem;
+
+            width: 300px;
+            height: 250px;
+
+            background: $gray-dark-500;
+            border-radius: 4px;
+
+            flex: 1 1 30rem;
+
+            .image-profile{
+                box-sizing: border-box;
+
+                width: 90px;
+                background: $gray-light-400;
+                border: 2px solid $gray-light-700;
+                border-radius: 50%;
+
+                object-fit: cover;
+                overflow: hidden
+            }
+            h4{
+                color: $white-color;
+            }
+            button{
+                color: $brand-color-blue;
+            }
+        }
+        .right-area{
+            @include flex(column, center, flex-start);
+            gap: 2rem;
+            padding: 2rem;
+            
+            background: $gray-dark-500;
+            border-radius: 4px;
+
+            flex: 1 1 50%;
+
+            .form-content{
+                @include flex(column, flex-start, flex-start);
+                gap: 2rem;
+                width: 100%;
+
+                .input-content{
+                    display: flex;
+                    align-items: center;
+                    gap: 1.2rem;
+                    width: 100%;
+                    flex-wrap: wrap;
+
+                    .input-box{
+                        @include flex(column, flex-start, flex-start);
+                        gap: 1rem;
+                        flex: 1 1 25.8rem;
+
+                        input{
+                            padding: .7rem 1.4rem;
+                            width: 100%;
+                            background: $gray-dark-200;
+                            color: $gray-light-200;
+                            border-radius: .4rem;
+                            outline: none;
+
+                            &:placeholder{
+                                color: $gray-light-500;
+                            }
+                            &:focus{
+                                border: .5px solid $gray-light-500;
+                                box-sizing: border-box;
+                            }
+                        }
+                    }
+                }
+
+                .input-button{
+                    @include flex(row, center, space-between);
+                    width: 100%;
+                    margin-top: 2rem;
+
+                    .btn-primary{
+                        &.green{
+                            background-color: $brand-color-green;
+                            transition: filter .3s;
+
+                            &:hover{
+                                filter: brightness(0.8);
+                            }
+                        }
+                    }
+
+                    button:nth-child(2){
+                        background-color: transparent;
+                        color: $brand-color-blue-light;
+
+                        &:hover{
+                            color: $brand-color-blue;
+                        }
+                    }
+
+                    @include responsive(421px){
+                        flex-direction: column;
+                        button{
+                            width: 100%;
+
+                            &:nth-child(2){
+                                margin-top: 1.2rem;
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+}

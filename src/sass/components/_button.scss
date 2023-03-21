@@ -1,0 +1,11 @@
+.btn-primary{
+    @include flex(row, center, center);
+    padding: .8rem 1.4rem;
+    gap: 4px;
+    background: $brand-color-blue;
+    border-radius: 2px;
+
+    color: $white-color;
+    font-weight: 500;
+    line-height: 22px;
+}

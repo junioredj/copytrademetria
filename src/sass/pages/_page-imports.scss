@@ -1,0 +1,71 @@
+.s-imports{
+    margin-bottom: 4rem;
+
+    .import-area{
+        display: flex;
+        flex-direction: column;
+        padding: 2.4rem 1.2rem;
+        gap: 2.4rem;
+
+        background: $gray-dark-500;
+        border-radius: 4px;
+
+        margin-top: 2rem;
+
+        .form-content{
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+
+            .input-content{
+                display: flex;
+                flex-direction: column;
+                gap: 1.2rem;
+
+                label{
+                    color: $gray-light-400;
+                }
+
+                select{
+                    padding: 0 1.2rem;
+
+                    max-width: 26.7rem;
+                    height: 3.7rem;
+                    
+                    background: $gray-dark-200;
+                    color: $gray-light-200;
+                    outline: none;
+                    border: 0.5px solid $gray-light-700;
+                    border-radius: 4px;
+                }
+
+                span{
+                    font-size: 1.2rem;
+                }
+
+                &.checkbox{
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+
+                    input[type="checkbox"]{
+                        background: $gray-dark-200;
+                        
+                        border: 0.5px solid $gray-light-700;
+                        border-radius: 4px;
+                    }
+                }
+            }
+
+            .input-button{
+                margin-top: 2rem;
+
+                button{
+                    &:disabled{
+                        filter: brightness(0.7);
+                    }
+                }
+            }
+        }
+    }
+}
