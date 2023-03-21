@@ -2,12 +2,12 @@ import React from 'react'
 import {ResponsiveContainer, LineChart, Line, Tooltip, CartesianGrid } from 'recharts'
 
 export function SaldoResumePeriodo({periodo, valor, porcentagem, data, dataKey}) {
-    
+     
     return (
         <div className="shape">
             <div className="resume-description">
                 <span>Ganhos último {periodo}</span>
-                <p>{valor}</p>
+                <p className={(parseFloat(valor)) < 0? 'result-red': ''}>R${valor}</p>
                 <small>{porcentagem}</small>
             </div>
             <div className="resume-chart">

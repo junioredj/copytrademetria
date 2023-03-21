@@ -40,7 +40,8 @@ export const AuthProvider = ({children}) => {
             }
             else 
             {
-                setErrorMessage('E-mail ou senha incorretos!')
+                setErrorMessage('E-mail ou senha incorretos!');
+                console.log(errorMessage)
                 
                 return response;
             }

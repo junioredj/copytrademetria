@@ -6,7 +6,7 @@ import { SaldoResume } from "../components/DashResume/SaldoResume";
 import { DashStatistic } from "../components/DashStatistic";
 import {ChartEvolucaoPatrimonio} from '../components/Charts/ChartEvolucaoPatrimonio';
 import { ChartEvolucaoPatrimonioLancamento } from "../components/Charts/ChartEvolucaoPatrimonioLancamento";
-import { getUserLocalStorage, GetResultYears, GetEvolucaoPatrimonial} from "../context/AuthProvider/util";
+import { getUserLocalStorage, GetResultYears} from "../context/AuthProvider/util";
 
 
 
@@ -92,25 +92,25 @@ export function DashboardApp (){
             <div className="dash-resume">
                 <div className="container">
                     <div className="dash-result">
-                        <SaldoResume profit={`${resultArray.profit}`} date={`${resultArray.date}`}/>
+                        <SaldoResume profit={resultArray.profit} date={`${resultArray.date}`}/>
 
                         <SaldoResumePeriodo 
                             periodo="dia" 
-                            valor={`R$${resultArray.result_day}`}
+                            valor={parseFloat(resultArray.result_day)}
                             porcentagem="-6.93%" 
                             data={resultArray.day}
                             dataKey="vd" />
 
                         <SaldoResumePeriodo 
                             periodo="mês" 
-                            valor={`R$${resultArray.result_mon}`}
+                            valor={resultArray.result_mon}
                             porcentagem="0" 
                             data={resultArray.mon}
                             dataKey="vm"/>
 
                         <SaldoResumePeriodo 
                             periodo="ano" 
-                            valor={`R$${resultArray.result_year}`}
+                            valor={resultArray.result_year}
                             porcentagem="0" 
                             data={resultArray.year}
                             dataKey="va"/>

@@ -17,7 +17,7 @@ const SigninSchema = yup.object({
 
 export function SignIn({openModal}){
 
-    const [errorMessage, setErrorMessage] = useState('Faça login para entrar!')
+    const [errorMessage, setErrorMessage] = useState('')
     
     const auth = useAuth();
     const navigate = useNavigate();
@@ -27,21 +27,16 @@ export function SignIn({openModal}){
     });
 
     async function Authenticated(values){
-        try {
-            const retorno = await auth.signin(values.email, values.password);
-            const objeto = JSON.parse(retorno);
-            if(objeto.login == "false")
-            {
-                const erro = auth.errorMessage;
-                setErrorMessage(erro);
-            }
-            else if(objeto.login == "true")
-                navigate('/');
-
-        } catch (error) {
-            const erro = auth.errorMessage;
-            setErrorMessage(erro);
+        const retorno = await auth.signin(values.email, values.password);
+        const objeto = JSON.parse(retorno);
+        if(objeto.login == "false")
+        {
+            setErrorMessage("E-mail ou senha incorretos!");
         }
+        else if(objeto.login == "true")
+            navigate('/');
+
+       
     };
 
     return (
@@ -54,7 +49,7 @@ export function SignIn({openModal}){
                         </header>
                         <main className="form-content">
                             <h4>Bem-vindo(a) ao Dashboard</h4>
-                            <span>{errorMessage}</span>
+                            <span className='result-red'>{errorMessage}</span>
                             <form onSubmit={handleSubmit(Authenticated)} className="form">
                                 <Input 
                                     label='E-mail'

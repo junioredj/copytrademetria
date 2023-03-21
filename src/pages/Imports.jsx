@@ -8,8 +8,11 @@ export function Imports() {
 
     async function onSubmit({account, plataform, check, file, tags}) {
         
-    
-    ImportOperations(getUserLocalStorage().email, tags);
+        const promise = await new Promise( (resolve) => setTimeout(() => {
+            resolve('helo')
+        }, 3000))
+
+        ImportOperations(getUserLocalStorage().email, tags);
     }
 
     return (
