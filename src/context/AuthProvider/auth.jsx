@@ -43,10 +43,8 @@ export const AuthProvider = ({ children }) => {
         setUserLocalStorage(payload);
         setUser(payload);
 
-        notifySucess("Login efetuado com sucesso!");
         return response;
       } else {
-        notifyError("E-mail ou senha incorretos!");
         return response;
       }
     } catch (error) {

@@ -43,20 +43,16 @@ export function SignIn({ openModal }) {
 
   async function Authenticated(values) {
     const retorno = await auth.signin(values.email, values.password);
-    if(retorno){
-      const objeto = JSON.parse(retorno);
-      if (objeto.login == "false") {
-        notifyError("E-mail ou senha incorretos!");
-        reset()
-      } 
-      else if (objeto.login == "true"){
-          navigate("/"); 
-          notifySucess('Login efetuado com sucesso!')
-      } 
-    }else{
+    const objeto = JSON.parse(retorno);
+    if (objeto.login == "false") {
+      notifyError("E-mail ou senha incorretos!");
       reset()
-    }
-    
+    } 
+    else if (objeto.login == "true"){
+        notifySucess('Login efetuado com sucesso!')
+        setTimeout(() => navigate("/"), 3000)
+        // navigate("/"); 
+    } 
   }
 
   return (
