@@ -1,90 +1,83 @@
-import {createContext, useEffect, useState} from 'react';
-import { Api } from '../../services/api';
-import { getUserLocalStorage, LoginRequest, RegisterRequest, setUserLocalStorage } from './util';
+import { createContext, useEffect, useState } from "react";
+import { notifyError, notifySucess } from "../../components/Toast/toast";
+import { Api } from "../../services/api";
+import {
+  getUserLocalStorage,
+  LoginRequest,
+  RegisterRequest,
+  setUserLocalStorage,
+} from "./util";
 
 export const AuthContext = createContext({});
 
-export const AuthProvider = ({children}) => {
-    const [user, setUser] = useState();
-    const [errorMessage, setErrorMessage] = useState('');
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState();
+  const [errorMessage, setErrorMessage] = useState("");
 
-    useEffect(() => {
-        const user = getUserLocalStorage();
+  useEffect(() => {
+    const user = getUserLocalStorage();
 
-        if(user){
-            // Api.get(`users/${user.token}`).then( response => {
-            //     console.log(response.data);
-            // })   
+    if (user) {
+      // Api.get(`users/${user.token}`).then( response => {
+      //     console.log(response.data);
+      // })
 
-            setUser(user);
-        }
+      setUser(user);
+    }
+  }, []);
 
-    },[]);
+  async function signin(email, password) {
+    try {
+      const response = await LoginRequest(email, password);
 
-    async function signin(email, password){
-        try {
-            const response = await LoginRequest(email, password);
+      const objeto = JSON.parse(response);
 
-            
-            
-            const objeto = JSON.parse(response);
-            
+      if (objeto.login == "true") {
+        console.log("FOI");
+        const payload = {
+          token: response.token,
+          email,
+          nome: objeto.nome,
+          sobrenome: objeto.sobrenome,
+        };
+        setUserLocalStorage(payload);
+        setUser(payload);
 
-            if(objeto.login == "true")
-            {
-                console.log("FOI");
-                const payload = { token: response.token, email , nome: objeto.nome, sobrenome: objeto.sobrenome};
-                setUserLocalStorage(payload);
-                setUser(payload);
-                return response;
-            }
-            else 
-            {
-                setErrorMessage('E-mail ou senha incorretos!');
-                console.log(errorMessage)
-                
-                return response;
-            }
+        notifySucess("Login efetuado com sucesso!");
+        return response;
+      } else {
+        notifyError("E-mail ou senha incorretos!");
+        return response;
+      }
+    } catch (error) {
+      notifyError("Não foi possível efetuar o login, tente novamente!");
+    }
+  }
 
-            
-            
-        } catch (error) {
-            setErrorMessage('E-mail ou senha incorretos!')
-            console.log(errorMessage)
-        }
-    };
+  const signup = async (username, email, password) => {
+    const response = await RegisterRequest(username, email, password);
 
-    const signup = async (username, email, password) => {
-        const response = await RegisterRequest(username, email, password);
-    
+    if (response.register == "true") {
+      notifySucess("Conta criada com sucesso, faça login para continuar!");
+      return;
+    } else {
+      if (response.duplicate == "true") {
+        notifyError("E-mail ja cadastrado!");
+      }
+    }
+  };
 
-        if(response.register == "true")
-        {
-            return;
-            /*const payload = {token: response.token, id: response.id};
-            setUser(payload);
-            setUserLocalStorage(payload);*/
-        }
-        else 
-        {
-            if(response.duplicate == "true")
-            {
-                setErrorMessage('E-mail ja cadastrado!')
-            }
-        }
+  const logout = (callback) => {
+    setUser(null);
+    setUserLocalStorage(null);
+    callback();
+  };
 
-        
-    };
-
-    const logout = (callback) => {
-        setUser(null);
-        setUserLocalStorage(null);
-        callback();
-    };
-
-    return (
-        <AuthContext.Provider value={{...user, ...errorMessage, signin, signup, logout}}>
-            {children}
-        </AuthContext.Provider>
-    );
+  return (
+    <AuthContext.Provider
+      value={{ ...user, ...errorMessage, signin, signup, logout }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };

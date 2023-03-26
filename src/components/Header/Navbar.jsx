@@ -8,7 +8,7 @@ export function Navbar(){
             <div className="container">
                 <ul className="nav-links">
                     <li className="nav-item">
-                        <Link to="/dashboard">
+                        <Link to="/">
                             <Gauge size={20} />
                             <span>Dashboard</span>
                         </Link>

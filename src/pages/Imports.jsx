@@ -1,18 +1,25 @@
 import { useForm } from 'react-hook-form';
 import { ArrowFatLineUp } from "phosphor-react";
 import { getUserLocalStorage, ImportOperations} from "../context/AuthProvider/util";
+import { notifyError, notifySucess } from '../components/Toast/toast';
 
 export function Imports() {
 
     const {register, handleSubmit, formState:{ errors, isSubmitting } } = useForm();
 
     async function onSubmit({account, plataform, check, file, tags}) {
-        
-        const promise = await new Promise( (resolve) => setTimeout(() => {
-            resolve('helo')
-        }, 3000))
+        try {
+            const promise = await new Promise( (resolve) => setTimeout(() => {
+                resolve('helo')
+            }, 1000))
+    
+            ImportOperations(getUserLocalStorage().email, tags);
 
-        ImportOperations(getUserLocalStorage().email, tags);
+            // notifySucess("Enviado com sucesso!");
+        } catch (error) {
+            // notifyError("Falha ao enviar, tente novamente!");
+            console.log(error)
+        }        
     }
 
     return (
@@ -31,7 +38,7 @@ export function Imports() {
 
                         
                         {/* action="http://localhost/trademetria/importar.php" */}
-                        <form  className="form-content"  method="POST" onSubmit={handleSubmit(onSubmit)} enctype="multipart/form-data">
+                        <form  className="form-content"  method="POST" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
                             <div className="input-content">
                                 <label htmlFor="select-acount">Selecione uma conta  </label>
                                 <select name="select-acount" id="select-acount" {...register("account")}>

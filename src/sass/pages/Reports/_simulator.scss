@@ -1,0 +1,61 @@
+.shape-content {
+    @include flex(row, flex-start, flex-start);
+    width: 100%;
+    padding-top: 2rem;
+    gap: 10px;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    .box-statistic {
+        @include flex(row, center, space-between);
+
+        padding: 2.4rem;
+        gap: 2.4rem;
+
+        background: $gray-dark-500;
+        border-radius: 4px;
+
+        flex: 1 1 25rem;
+
+        .statistic {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            flex: 1;
+
+            span {
+                font-size: 1.6rem;
+                color: $gray-light-600;
+            }
+            strong {
+                font-size: 2rem;
+                color: $gray-light-500;
+            }
+
+            .box-info {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 1rem;
+
+                span {
+                    font-size: 1rem;
+                    font-weight: 500;
+                    padding: 0 0.4rem;
+                    border-radius: 0.4rem;
+                    background: $gray-dark-200;
+                    color: $white-color;
+                }
+            }
+        }
+    }
+}
+
+.shape-content.kpis {
+    padding-bottom: 2rem;
+    .box-statistic {
+        background-color: $gray-dark-400;
+    }
+}

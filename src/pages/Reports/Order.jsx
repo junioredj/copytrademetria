@@ -1,22 +1,25 @@
-import { Gauge } from 'phosphor-react'
-import React, { useState } from 'react'
-import { FilterBox } from '../../components/Reports/FilterBox'
-import { ResultBox } from '../../components/Reports/ResultBox'
-import { Section } from '../../components/Section'
+import { Gauge } from "phosphor-react";
+import React, { useState } from "react";
+import { FilterBox } from "../../components/Reports/FilterBox";
+import { ResultBox } from "../../components/Reports/ResultBox";
+import { Section } from "../../components/Section";
 
-//Fazer a requisição do PHP
-import dataTable from '../../components/DataTable/object.json'
-import { DataTables } from '../../components/DataTable'
-import { GetTrades, getUserLocalStorage} from "../../context/AuthProvider/util";
+import { DataTables } from "../../components/DataTable";
+import {
+  GetTrades,
+  getUserLocalStorage,
+} from "../../context/AuthProvider/util";
 
 export function Order() {
   const [data, setData] = useState([]);
-  var dados = GetTrades(getUserLocalStorage().email); 
-  dados.then(t => {setData(t)});
-  console.log(data);
+  var dados = GetTrades(getUserLocalStorage().email);
+  dados.then((t) => {
+    setData(t);
+  });
+
   return (
-    <Section sectionName='orders' pageTitle='Relatório de Ordens'>
-      <FilterBox filterTitle='Filtre suas Ordens'>
+    <Section sectionName="orders" pageTitle="Relatório de Ordens">
+      <FilterBox filterTitle="Filtre suas Ordens">
         <form className="filter-form">
           <div className="row">
             <select name="select-date" id="select-date">
@@ -63,14 +66,14 @@ export function Order() {
               <option value="venda">Venda</option>
             </select>
 
-            <input type="text" placeholder='Código'/>
+            <input type="text" placeholder="Código" />
           </div>
 
           <div className="row">
-            <input type="text" placeholder='Variação de Preço'/>
-            <input type="time" placeholder='Horário de'/>
-            <input type="time" placeholder='Horário até'/>
-            <input type="text" placeholder='% limite'/>
+            <input type="text" placeholder="Variação de Preço" />
+            <input type="time" placeholder="Horário de" />
+            <input type="time" placeholder="Horário até" />
+            <input type="text" placeholder="% limite" />
             <select name="select-day" id="select-day">
               <option value="">Dia</option>
               <option value="segunda">Segunda</option>
@@ -90,29 +93,31 @@ export function Order() {
           </div>
 
           <div className="row">
-            <input type="text" placeholder='Subjacente' />
+            <input type="text" placeholder="Subjacente" />
             <select name="select-row-3" id="select-row-3">
               <option value="backratio">Backratio</option>
               <option value="bear-call">Bear call</option>
               <option value="bear-put">Bear Put</option>
             </select>
-            <input type="text" placeholder='Prc de Venc.'/>
-            <input type="date" placeholder='Dt de Venc.'/>
+            <input type="text" placeholder="Prc de Venc." />
+            <input type="date" placeholder="Dt de Venc." />
             <select name="select-operaction" id="select-operation">
               <option value="">Tipo de Operação</option>
               <option value="call">Call</option>
               <option value="put">Put</option>
             </select>
 
-            <button className='btn-primary' type="submit">Filtrar</button>
-            <button >Limpar</button>
+            <button className="btn-primary" type="submit">
+              Filtrar
+            </button>
+            <button>Limpar</button>
           </div>
         </form>
       </FilterBox>
-      
-      <ResultBox resultTitle='Mostrando todas as Ordens' Icon={Gauge}>
-        <DataTables data={data} tableId='table-orders'/>
+
+      <ResultBox resultTitle="Mostrando todas as Ordens" Icon={Gauge}>
+        <DataTables data={data} tableId="table-orders" />
       </ResultBox>
     </Section>
-  )
+  );
 }

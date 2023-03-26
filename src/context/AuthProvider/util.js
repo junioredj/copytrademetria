@@ -1,222 +1,172 @@
 import { Api } from "../../services/api";
-import { Gauge } from 'phosphor-react'
-import React, { Component, useCallback, useEffect, useState } from 'react'
-import { DataTables } from '../../components/DataTable'
-
-import { FilterBox } from '../../components/Reports/FilterBox'
-import { ResultBox } from '../../components/Reports/ResultBox'
-import { Section } from '../../components/Section'
-import axios from 'axios'
-import { data } from "jquery";
-import { json } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 
 // Adicionar e ler o Local Storage
-export function setUserLocalStorage (user){
-    localStorage.setItem('u', JSON.stringify(user));
+export function setUserLocalStorage(user) {
+  localStorage.setItem("u", JSON.stringify(user));
 }
-export function getUserLocalStorage (){
-    const json = localStorage.getItem('u');
+export function getUserLocalStorage() {
+  const json = localStorage.getItem("u");
 
-    if(!json){
-        return "null";
-    }
+  if (!json) {
+    return "null";
+  }
 
-    const user = JSON.parse(json);
-    return user ?? "null";
-}
-
-export async function LoginRequest (email, password) {
-    
-    
-
-    const request = await Api.post("signin.php", {email: email, password:password});
-    
-    return request.request.response;
+  const user = JSON.parse(json);
+  return user ?? "null";
 }
 
-export async function RegisterRequest (username, email, password) {
-    try {
-        const request = await Api.post('signup.php', {nome: username, email: email, password:password});
-    
-        return request.data;
+export async function LoginRequest(email, password) {
+  const request = await Api.post("signin.php", {
+    email: email,
+    password: password,
+  });
 
-    } catch (error) {
-        return error;
-    }
+  return request.request.response;
 }
 
-export async function UserRequest(id){
-    try {
-        const request = await Api.get(`users/${id}`);
+export async function RegisterRequest(username, email, password) {
+    const request = await Api.post("signup.php", {
+      nome: username,
+      email: email,
+      password: password,
+    });
 
-        return request.data;
-
-    } catch (error) {
-        return error
-    }
+    return request.data;
 }
 
-export async function UserUpdate({name, surname, email, pass}){
-    try {
+export async function UserRequest(id) {
+  try {
+    const request = await Api.get(`users/${id}`);
 
-        
-        const request = await Api.put("update-cliente.php", {name, surname, email, pass});
-        
-        return request.data;
-
-    } catch (error) {
-        return error
-    }
+    return request.data;
+  } catch (error) {
+    return error;
+  }
 }
 
-export async function UserDelete(id){
-    try {
-        const request = await Api.delete(`users/${id}`);
+export async function UserUpdate({ name, surname, email, pass }) {
+  try {
+    const request = await Api.put("update-cliente.php", {
+      name,
+      surname,
+      email,
+      pass,
+    });
 
-        return
-
-    } catch (error) {
-        return error
-    }
+    return request.data;
+  } catch (error) {
+    return error;
+  }
 }
 
-export async function GetTrades(email)
-{
-    try
-    {
-        //Buscando os dados da api
-        const [data, setData] = useState([]);
+export async function UserDelete(id) {
+  try {
+    const request = await Api.delete(`users/${id}`);
 
-        var dados = [];
-        useEffect(() =>{
-
-        const controller = new AbortController();
-        const handleFetch = async () =>{
-            return new Promise(async function (resolve, reject) {
-
-                try
-                {
-                const resposta = await Api.get("listar-operacoes.php?email=" + email,{signal: controller.signal})
-                .then((response)=> {
-                    setData(response.data);
-                    dados.push(response.data);
-                    resolve(data.json());
-                    
-            
-                }).catch(() => {
-                    console.log("Erro");
-                })
-                }
-                catch(error)
-                {
-
-                }
-            })
-        };
-
-        handleFetch();
-
-        return () => {
-            controller.abort();
-        }
-
-        }, []);
-        return data;
-    }
-    catch(error)
-    {
-        return error;
-    }
+    return;
+  } catch (error) {
+    return error;
+  }
 }
-export async function GetEvolucaoPatrimonial(email)
-{
-    const [resultArray, setResultArray] = useState([])
-    
-    useEffect(() =>{
 
+export async function GetTrades(email) {
+  try {
+    //Buscando os dados da api
+    const [data, setData] = useState([]);
+
+    var dados = [];
+    useEffect(() => {
+      const controller = new AbortController();
+      const handleFetch = async () => {
+        return new Promise(async function (resolve, reject) {
+          try {
+            const resposta = await Api.get(
+              "listar-operacoes.php?email=" + email,
+              { signal: controller.signal }
+            )
+              .then((response) => {
+                setData(response.data);
+                dados.push(response.data);
+                resolve(data.json());
+              })
+              .catch(() => {
+                console.log("Erro");
+              });
+          } catch (error) {}
+        });
+      };
+
+      handleFetch();
+
+      return () => {
+        controller.abort();
+      };
+    }, []);
+    return data;
+  } catch (error) {
+    return error;
+  }
+}
+export async function GetEvolucaoPatrimonial(email) {
+  const [resultArray, setResultArray] = useState([]);
+
+  useEffect(() => {
     const controller = new AbortController();
-    const handleFetch = async () =>{
-      try
-      {
-        const resposta = await Api.get("evolucao-patrimonial.php?email=" + email, {signal: controller.signal})
-        .then(response => setResultArray(response.data))
-
-      }
-      catch(error)
-      {
-
-      }
-      
+    const handleFetch = async () => {
+      try {
+        const resposta = await Api.get(
+          "evolucao-patrimonial.php?email=" + email,
+          { signal: controller.signal }
+        ).then((response) => setResultArray(response.data));
+      } catch (error) {}
     };
 
     handleFetch();
 
-    
-
-
     return () => {
       controller.abort();
-    }
-
-    
-
+    };
   }, []);
 
   return resultArray;
-
 }
-export async function GetResultYears(email)
-{
-    const [resultArray, setResultArray] = useState([])
-    
-    useEffect(() =>{
+export async function GetResultYears(email) {
+  const [resultArray, setResultArray] = useState([]);
 
+  useEffect(() => {
     const controller = new AbortController();
-    const handleFetch = async () =>{
-      try
-      {
-        const resposta = await Api.get("get-result-year.php?email=" + email, {signal: controller.signal})
-        .then(response => setResultArray(response.data))
-
-      }
-      catch(error)
-      {
-
-      }
-      
+    const handleFetch = async () => {
+      try {
+        const resposta = await Api.get("get-result-year.php?email=" + email, {
+          signal: controller.signal,
+        }).then((response) => setResultArray(response.data));
+      } catch (error) {}
     };
 
     handleFetch();
 
-    
-
-
     return () => {
       controller.abort();
-    }
-
-    
-
+    };
   }, []);
 
   //console.log(resultArray);
   return resultArray;
-
 }
-export async function ImportOperations (email, tags) {
-    
-    
+export async function ImportOperations(email, tags) {
+  var formData = new FormData();
+  var imagefile = document.querySelector("#import-file");
+  formData.append("file", imagefile.files[0]);
+  formData.append("email", email);
+  formData.append("tags", tags);
 
-    var formData = new FormData();
-    var imagefile = document.querySelector('#import-file');
-    formData.append("file", imagefile.files[0]);
-    formData.append("email", email);
-    formData.append("tags", tags);
+  const request = await Api.post("importar.php", formData, {
+    headers: {
+      "content-type": "multipart/form-data",
+    },
+  });
 
-    const request = await Api.post("importar.php", formData, {headers: {
-        'content-type': 'multipart/form-data'
-      }});
-
-    console.log(request.request.response);
-    return request.request.response;
+  // console.log(request.request.response);
+  return request.request.response;
 }
