@@ -1,5 +1,9 @@
 import { createContext, useEffect, useState } from "react";
-import { notifyError, notifySucess } from "../../components/Toast/toast";
+import {
+  notifyError,
+  notifySucess,
+  notifyWarn,
+} from "../../components/Toast/toast";
 import { Api } from "../../services/api";
 import {
   getUserLocalStorage,
@@ -54,13 +58,12 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (username, email, password) => {
     const response = await RegisterRequest(username, email, password);
-
     if (response.register == "true") {
-      notifySucess("Conta criada com sucesso, faça login para continuar!");
-      return;
+      notifySucess("Cadastrado com sucesso, faça login para continuar!");
+      return response;
     } else {
       if (response.duplicate == "true") {
-        notifyError("E-mail ja cadastrado!");
+        notifyWarn("E-mail ja cadastrado!");
       }
     }
   };

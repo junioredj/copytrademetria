@@ -206,12 +206,12 @@
                                 }
                                 else
                                 {
-                                        return json_encode(array("register" => "false", "duplicate" => "false"));
+                                        return json_encode(array("register" => "false", "duplicate" => "true"));
                                 }
                         }
                         else
                         {
-                                return json_encode(array("register" => "false", "duplicate" => "false"));
+                                return json_encode(array("register" => "false", "duplicate" => "true"));
                         }
                 }
                 catch(PDOException $erro)

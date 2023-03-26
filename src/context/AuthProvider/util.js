@@ -1,5 +1,6 @@
 import { Api } from "../../services/api";
 import React, { useEffect, useState } from "react";
+import { notifyError, notifySucess } from "../../components/Toast/toast";
 
 // Adicionar e ler o Local Storage
 export function setUserLocalStorage(user) {
@@ -155,18 +156,22 @@ export async function GetResultYears(email) {
   return resultArray;
 }
 export async function ImportOperations(email, tags) {
-  var formData = new FormData();
-  var imagefile = document.querySelector("#import-file");
-  formData.append("file", imagefile.files[0]);
-  formData.append("email", email);
-  formData.append("tags", tags);
+  try {
+    var formData = new FormData();
+    var imagefile = document.querySelector("#import-file");
+    formData.append("file", imagefile.files[0]);
+    formData.append("email", email);
+    formData.append("tags", tags);
 
-  const request = await Api.post("importar.php", formData, {
-    headers: {
-      "content-type": "multipart/form-data",
-    },
-  });
+    const request = await Api.post("importar.php", formData, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    });
 
-  // console.log(request.request.response);
-  return request.request.response;
+    notifySucess("Importado com sucesso!")
+    return request.request.response;
+  } catch (error) {
+    notifyError("Erro ao importar, tente novamente!")
+  }
 }

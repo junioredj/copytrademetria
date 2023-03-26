@@ -40,9 +40,12 @@ export function SignUp() {
 
   async function Registed(values) {
     try {
-      await auth.signup(values.username, values.email, values.password);
+      const response = await auth.signup(values.username, values.email, values.password);
+      
+      if(response) navigate("/signin");
 
-      navigate("/signin");
+      reset()
+      
     } catch (error) {
       notifyError("Erro inesperado, tente novamente mais tarde!");
       reset();

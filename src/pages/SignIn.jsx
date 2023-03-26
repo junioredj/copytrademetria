@@ -50,7 +50,7 @@ export function SignIn({ openModal }) {
     } 
     else if (objeto.login == "true"){
         notifySucess('Login efetuado com sucesso!')
-        setTimeout(() => navigate("/"), 3000)
+        setTimeout(() => navigate("/"), 1500)
         // navigate("/"); 
     } 
   }

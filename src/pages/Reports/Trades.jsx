@@ -19,7 +19,7 @@ export function Trades() {
     setData(t);
   });
 
-  console.log(data)
+  console.log(dados)
 
   return (
     <Section sectionName="trades" pageTitle="Relatório de Trades">

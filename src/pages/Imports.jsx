@@ -8,18 +8,11 @@ export function Imports() {
     const {register, handleSubmit, formState:{ errors, isSubmitting } } = useForm();
 
     async function onSubmit({account, plataform, check, file, tags}) {
-        try {
-            const promise = await new Promise( (resolve) => setTimeout(() => {
-                resolve('helo')
-            }, 1000))
-    
-            ImportOperations(getUserLocalStorage().email, tags);
+        const promise = await new Promise( (resolve) => setTimeout(() => {
+            resolve('helo')
+        }, 1000))
 
-            // notifySucess("Enviado com sucesso!");
-        } catch (error) {
-            // notifyError("Falha ao enviar, tente novamente!");
-            console.log(error)
-        }        
+        ImportOperations(getUserLocalStorage().email, tags);      
     }
 
     return (
