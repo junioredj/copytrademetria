@@ -47,18 +47,22 @@ export async function UserRequest(id) {
 }
 
 export async function UserUpdate({ name, surname, email, pass }) {
+
+
   try {
-    const request = await Api.put("update-cliente.php", {
-      name,
-      surname,
-      email,
-      pass,
+    const request = await Api.post("update-cliente.php",{
+      nome: name,
+      surname: surname,
+      email: email,
+      password: pass,
     });
 
-    return request.data;
+    return request.request.response;
   } catch (error) {
     return error;
   }
+
+  
 }
 
 export async function UserDelete(id) {

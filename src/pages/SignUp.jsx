@@ -4,6 +4,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useAuth } from "../context/AuthProvider/useAuth";
+import LogoHeader from "../img/logo.png";
 
 import { Footer } from "../components/Footer";
 import { Button } from "../components/Form/Button";
@@ -58,7 +59,11 @@ export function SignUp() {
         <div className="signup">
           <section className="content">
             <header>
-              <h2>Dashboard</h2>
+            <div className="logo">
+                <Link to="/dashboard">
+                  <img  src={LogoHeader} alt="Logo Dashboard" />
+                </Link>
+              </div>
             </header>
             <main className="form-content">
               <h6>Comece com uma conta gratuita!</h6>

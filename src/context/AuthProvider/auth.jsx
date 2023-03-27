@@ -37,7 +37,6 @@ export const AuthProvider = ({ children }) => {
       const objeto = JSON.parse(response);
 
       if (objeto.login == "true") {
-        console.log("FOI");
         const payload = {
           token: response.token,
           email,
@@ -58,6 +57,7 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (username, email, password) => {
     const response = await RegisterRequest(username, email, password);
+    console.log(response);
     if (response.register == "true") {
       notifySucess("Cadastrado com sucesso, faça login para continuar!");
       return response;

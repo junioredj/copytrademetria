@@ -3,10 +3,11 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { UserCircle, XCircle, FloppyDisk } from "phosphor-react";
 
-import { UserRequest, UserUpdate, UserDelete, getUserLocalStorage } from "../context/AuthProvider/util";
+import { UserRequest, GetResultYears, UserUpdate, UserDelete, getUserLocalStorage, setUserLocalStorage } from "../context/AuthProvider/util";
 
 import ImageProfile from '../img/avatar-placeholder.webp';
 import { useAuth } from "../context/AuthProvider/useAuth";
+import {notifySucess, notifyError} from "../components/Toast/toast";
 
 const dataT = {
     name: getUserLocalStorage().nome,
@@ -39,7 +40,9 @@ export function Profile() {
     const userUpdate = async ( data ) => {
         
         const response = UserUpdate( data );
-        alert("POI");
+        
+
+
         return response;
     }
 
@@ -51,8 +54,30 @@ export function Profile() {
     const onSubmit = async (values) => {
         // const data =  await userUpdate(values);
 
+        
+
         const promise = await new Promise( (resolve) => setTimeout(() => {
-            resolve('helo')
+            userUpdate(values).then(response=>{
+                const objeto = JSON.parse(response);
+                if(objeto.update == "true")
+                {
+                    console.log(objeto.update);
+                    const payload = {
+                    email: objeto.email,
+                    nome: objeto.nome,
+                    sobrenome: objeto.sobrenome,
+                    };
+                    setUserLocalStorage(payload);
+    
+                    notifySucess('Dados atualizados com sucesso!')
+                    resolve('helo');
+    
+                }
+                else
+                {
+                    notifyError('Erro ao atualizar dados!')
+                }
+            });
         }, 3000))
 
         setUserData(values);
@@ -73,7 +98,7 @@ export function Profile() {
                             </div>
                             <h4>{userData.name}</h4>
                             <span>{userData.email}</span>
-                            <button>Escolher foto</button>
+                            {/* <button>Escolher foto</button> */}
                         </div>
                         <div className="right-area">
                             <div className="title-section">
@@ -103,6 +128,7 @@ export function Profile() {
                                     <div className="input-box">
                                         <label htmlFor="email">E-mail</label>
                                         <input 
+                                        readOnly
                                         type="email" 
                                         name="email" 
                                         id="email"

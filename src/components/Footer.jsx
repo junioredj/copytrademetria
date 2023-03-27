@@ -2,7 +2,7 @@ export function Footer(){
     return (
         <footer>
             <span className="footer-msg">
-                Copyright © &nbsp;<a href="/dashboard"> Dashboard App </a>&nbsp;- atualizado em 2023
+                Copyright © &nbsp;<a href="/dashboard"> Traders Dash </a>&nbsp;- atualizado em {new Date().getFullYear()}
             </span>
         </footer>
     );

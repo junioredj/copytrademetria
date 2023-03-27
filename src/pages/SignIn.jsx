@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import LogoHeader from "../img/logo.png";
 
 import { useAuth } from "../context/AuthProvider/useAuth";
 
@@ -61,7 +62,11 @@ export function SignIn({ openModal }) {
         <div className="signin">
           <section className="content">
             <header>
-              <h2>Dashboard</h2>
+            <div className="logo">
+                <Link to="/dashboard">
+                  <img  src={LogoHeader} alt="Logo Dashboard" />
+                </Link>
+              </div>
             </header>
             <main className="form-content">
               <h4>Bem-vindo(a) ao Dashboard</h4>
