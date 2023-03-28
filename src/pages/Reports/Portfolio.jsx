@@ -6,12 +6,28 @@ import { FilterBox } from '../../components/Reports/FilterBox'
 import { ResultBox } from '../../components/Reports/ResultBox'
 import { Section } from '../../components/Section'
 import { DataTables } from '../../components/DataTable';
+import {
+  GetTrades,
+  getUserLocalStorage,
+} from "../../context/AuthProvider/util";
 
 //Fazer a requisição do PHP
 import dataTable from '../../components/DataTable/object.json'
 
 export function Portfolio() {
-  const [data, setData] = useState(dataTable);
+  const [data, setData] = useState([{}]);
+
+
+  var email = getUserLocalStorage().email;
+
+  const dados = GetTrades(email).then((t) => {
+
+
+    if (t.length > 0) {
+      setData(t);
+    }
+
+  });
 
   const seriesType = [21061.071429, 2728.6];
   const optionsType = {

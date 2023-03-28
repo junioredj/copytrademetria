@@ -1,5 +1,5 @@
 import { Gauge } from "phosphor-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DataTables } from "../../components/DataTable";
 
 import { FilterBox } from "../../components/Reports/FilterBox";
@@ -11,17 +11,31 @@ import {
 } from "../../context/AuthProvider/util";
 
 export function Trades() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([{}]);
 
-  const dados = GetTrades(getUserLocalStorage().email);
+  var email = getUserLocalStorage().email;
 
-  dados.then((t) => {
-    setData(t);
+  const dados = GetTrades(email).then((t) => {
+
+
+    if (t.length > 0) {
+      setData(t);
+      
+      console.log(document.getElementById("table-trade"));
+    }
+
   });
 
-  console.log(data)
-  
-  
+
+
+  // console.log(valores, email);
+
+  // const valor = valores;
+  // console.log(valor.length);
+
+  // data = valores;
+
+
 
   return (
     <Section sectionName="trades" pageTitle="Relatório de Trades">
@@ -34,4 +48,10 @@ export function Trades() {
       </ResultBox>
     </Section>
   );
+
+
+
+
+
+
 }

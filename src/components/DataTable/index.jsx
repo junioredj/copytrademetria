@@ -20,16 +20,40 @@ export function DataTables({ data, tableId }) {
     $(`#${tableId}`).DataTable({
       scrollX: true,
       responsive: true,
-      autoWidth: true,
+      autoWidth: true,    
+      
       columnDefs: [
         {
+          
           target: 0,
           visible: false,
           searchable: false,
         },
       ],
+
+      "bDestroy": true,
     });
   });
+
+  
+  
+
+  const colunas = [
+  "Data Abertura",
+  "Data Fechamento",
+  "Ativo",
+  "Sentido",
+  "Qtd Compra",
+  "Qtd Venda",
+  "Preco Compra",
+  "Preco Venda",
+  "Resultado Bruto",
+  "Corretagem",
+  "Taxas",
+  "Resultado Líq",
+  "Tags",
+  "PCT",
+  "Opções",];
 
   const keys = Object.keys(data[0]);
 

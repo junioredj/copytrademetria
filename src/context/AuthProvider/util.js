@@ -27,12 +27,16 @@ export async function LoginRequest(email, password) {
 }
 
 export async function RegisterRequest(username, email, password) {
+
+
+    
     const request = await Api.post("signup.php", {
       nome: username,
       email: email,
       password: password,
     });
 
+    console.log(request);
     return request.data;
 }
 
@@ -159,23 +163,27 @@ export async function GetResultYears(email) {
   //console.log(resultArray);
   return resultArray;
 }
-export async function ImportOperations(email, tags) {
+export async function ImportOperations(email, tags,file) {
   try {
     var formData = new FormData();
     var imagefile = document.querySelector("#import-file");
-    formData.append("file", imagefile.files[0]);
+    formData.append("file", imagefile.files[0]);//imagefile.files[0]
     formData.append("email", email);
     formData.append("tags", tags);
 
+    console.log(imagefile.files[0]);
     const request = await Api.post("importar.php", formData, {
       headers: {
-        "content-type": "multipart/form-data",
-      },
+        'Content-Type': 'multipart/form-data'
+      }
     });
+
+    console.log(request.data);
 
     notifySucess("Importado com sucesso!")
     return request.request.response;
   } catch (error) {
+    console.log((error.response.data));
     notifyError("Erro ao importar, tente novamente!")
   }
 }

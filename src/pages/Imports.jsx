@@ -12,7 +12,7 @@ export function Imports() {
             resolve('helo')
         }, 1000))
 
-        ImportOperations(getUserLocalStorage().email, tags);      
+        ImportOperations(getUserLocalStorage().email, tags, file);      
     }
 
     return (

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import { Gauge, SquaresFour } from "phosphor-react";
+import "jquery";
+import "jquery-ui-dist/jquery-ui";
 
 import { ResultBox } from "../../components/Reports/ResultBox";
 import { Section } from "../../components/Section";
@@ -8,6 +10,7 @@ import { DataTables } from "../../components/DataTable";
 
 import dadosFake from '../../components/DataTable/object.json';
 import { useForm } from "react-hook-form";
+import { GetTrades, getUserLocalStorage } from "../../context/AuthProvider/util";
 
 //dados fake
 const data01 = [
@@ -28,7 +31,11 @@ const data02 = [
 ];
 
 export function Simulator() {
-  const {register, handleSubmit, reset } = useForm();
+
+
+
+
+  const { register, handleSubmit, reset } = useForm();
 
   //Função disparado do formulario
   async function onSubmit(values) {
@@ -125,8 +132,56 @@ export function Simulator() {
 
   const [qtdTrade, setQtdTrade] = useState("39");
 
-  // const [data, setDate] = useState([]);
   const [data, setDate] = useState(dadosFake);
+
+
+
+
+
+  var email = getUserLocalStorage().email;
+
+  /*const dados = GetTrades(email).then((t) => {
+
+
+    if (t.length > 0) {
+      setDate(t);
+    }
+
+  });*/
+
+  var table = $('#table-simulator').dataTable();
+  var oSettings = table.fnSettings();
+
+  table.fnClearTable(this);
+  table.DataTable().destroy();
+  table.find('tbody').append([{
+    "id": 8,
+    "dt_abertura": "2023-01-23 11:50:44",
+    "dt_fechamento": "2023-01-23 12:31:34",
+    "codigo": "WING23asdf",
+    "lado": "C",
+    "qty_compra": 1,
+    "qty_venda": 1,
+    "preco_compra": 113070,
+    "preco_venda": 113575,
+    "res_bruto": 101,
+    "corretagem": "R$0",
+    "taxas": "R$0",
+    "res_liq": 101,
+    "tags": null,
+    "pct": "%",
+    "opcoes": " "
+  }]);
+  table.DataTable({
+    "responsive": true,
+    "autoWidth": false,
+    "ordering": false,
+    "info": true,
+    "pageLength": 10,
+    "bDestroy": true,
+    "recordsFiltered": 10,
+  }).draw();
+
 
   return (
     <Section sectionName="simulator" pageTitle="Simulador de Resulatados">
@@ -180,10 +235,10 @@ export function Simulator() {
             <input type="text" placeholder="Código" {...register('codigo')} />
           </div>
           <div className="row">
-            <input type="text" placeholder="Variação de Preço" {...register('variacao')}/>
-            <input type="time" placeholder="Horário de" {...register('hrDe')}/>
-            <input type="time" placeholder="Horário até" {...register('hrAte')}/>
-            <input type="text" placeholder="% limite" {...register('pct')}/>
+            <input type="text" placeholder="Variação de Preço" {...register('variacao')} />
+            <input type="time" placeholder="Horário de" {...register('hrDe')} />
+            <input type="time" placeholder="Horário até" {...register('hrAte')} />
+            <input type="text" placeholder="% limite" {...register('pct')} />
             <select name="select-day" id="select-day" {...register('dia')}>
               <option value="">Dia</option>
               <option value="segunda">Segunda</option>

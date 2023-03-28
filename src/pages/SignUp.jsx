@@ -27,6 +27,8 @@ const SignupSchema = yup
   .required("Senha obrigatória!");
 
 export function SignUp() {
+
+
   const auth = useAuth();
   const navigate = useNavigate();
 

@@ -11,12 +11,17 @@ import {
 } from "../../context/AuthProvider/util";
 
 export function Order() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([{}]);
 
-  const dados = GetTrades(getUserLocalStorage().email);
+  var email = getUserLocalStorage().email;
 
-  dados.then((t) => {
-    setData(t);
+  const dados = GetTrades(email).then((t) => {
+
+
+    if (t.length > 0) {
+      setData(t);
+    }
+
   });
 
   console.log(data)
