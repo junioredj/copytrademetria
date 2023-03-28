@@ -110,6 +110,7 @@ export function Profile() {
                                     <div className="input-box">
                                         <label htmlFor="name">Nome</label>
                                         <input
+                                            value={getUserLocalStorage().nome}
                                             type="text" 
                                             name="name" 
                                             id="name"
@@ -119,6 +120,7 @@ export function Profile() {
                                         <label htmlFor="surname">Sobrenome</label>
                                         <input 
                                         type="text" 
+                                        value={getUserLocalStorage().sobrenome}
                                         name="surname" 
                                         id="surname"
                                         {...register('surname')} />
@@ -132,6 +134,7 @@ export function Profile() {
                                         type="email" 
                                         name="email" 
                                         id="email"
+                                        value={getUserLocalStorage().email}
                                         {...register('email')} />
                                     </div>
                                     <div className="input-box">

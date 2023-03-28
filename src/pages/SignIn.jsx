@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -28,6 +28,40 @@ const SigninSchema = yup
   .required("Senha obrigatória!");
 
 export function SignIn({ openModal }) {
+
+
+
+
+    async function onSubmit({email, password}) {
+
+      /*var promise = new Promise( (resolve) => setTimeout(() => {
+        return resolve({resolve: Authenticated(email, password)});
+      }, 500))
+
+      const printAddress = async () => {
+        const a = await promise;
+        console.log(a);
+      };
+      
+      printAddress();*/
+
+      const p = Promise.resolve(Authenticated(email, password));
+
+      p.then(value => {
+        console.log(value); // 👉️ "bobbyhadz.com"
+
+        if(value == true)
+        {
+            navigate("/");
+        }
+
+
+      }).catch(err => {
+        console.log(err);
+      });
+        
+    }
+
   const [errorMessage, setErrorMessage] = useState("");
 
   const auth = useAuth();
@@ -37,23 +71,29 @@ export function SignIn({ openModal }) {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(SigninSchema),
   });
 
-  async function Authenticated(values) {
-    const retorno = await auth.signin(values.email, values.password);
+  async function Authenticated(email, password) {
+    const retorno = await auth.signin(email, password);
     const objeto = JSON.parse(retorno);
     if (objeto.login == "false") {
       notifyError("E-mail ou senha incorretos!");
-      reset()
+      reset();
+      return false;
     } 
     else if (objeto.login == "true"){
         notifySucess('Login efetuado com sucesso!')
-        setTimeout(() => navigate("/"), 1500)
+        // setTimeout(() => navigate("/"), 500)
         // navigate("/"); 
+        return true;
     } 
+
+
+    
+    
   }
 
   return (
@@ -71,7 +111,7 @@ export function SignIn({ openModal }) {
             <main className="form-content">
               <h4>Bem-vindo(a) ao Dashboard</h4>
               <span className="result-red">{errorMessage}</span>
-              <form onSubmit={handleSubmit(Authenticated)} className="form">
+              <form onSubmit={handleSubmit(onSubmit)} className="form">
                 <Input
                   label="E-mail"
                   type="email"
@@ -90,7 +130,9 @@ export function SignIn({ openModal }) {
                 />
 
                 <div className="submit-box">
-                  <Button type="submit" name="Entrar" />
+                  <button type="submit" disabled={isSubmitting} className='btn-primary'>
+                      {isSubmitting? 'Entrando...' : 'Entrar'}
+                  </button>
                   <button type="button" onClick={openModal}>
                     esqueceu a senha?
                   </button>

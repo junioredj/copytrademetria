@@ -12,10 +12,14 @@ import {
 
 export function Order() {
   const [data, setData] = useState([]);
-  var dados = GetTrades(getUserLocalStorage().email);
+
+  const dados = GetTrades(getUserLocalStorage().email);
+
   dados.then((t) => {
     setData(t);
   });
+
+  console.log(data)
 
   return (
     <Section sectionName="orders" pageTitle="Relatório de Ordens">
