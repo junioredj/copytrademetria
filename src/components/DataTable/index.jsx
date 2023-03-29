@@ -22,38 +22,18 @@ export function DataTables({ data, tableId }) {
       responsive: true,
       autoWidth: true,    
       
-      columnDefs: [
-        {
+      // columnDefs: [
+      //   {
           
-          target: 0,
-          visible: false,
-          searchable: false,
-        },
-      ],
+      //     target: 0,
+      //     visible: false,
+      //     searchable: false,
+      //   },
+      // ],
 
       "bDestroy": true,
     });
   });
-
-  
-  
-
-  const colunas = [
-  "Data Abertura",
-  "Data Fechamento",
-  "Ativo",
-  "Sentido",
-  "Qtd Compra",
-  "Qtd Venda",
-  "Preco Compra",
-  "Preco Venda",
-  "Resultado Bruto",
-  "Corretagem",
-  "Taxas",
-  "Resultado Líq",
-  "Tags",
-  "PCT",
-  "Opções",];
 
   const keys = Object.keys(data[0]);
 

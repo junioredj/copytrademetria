@@ -10,6 +10,7 @@ import { DashboardApp } from './pages/DashboardApp';
 import { Home } from "./pages/Home";
 import { Imports } from "./pages/Imports";
 import { Profile } from "./pages/Profile";
+
 import { Reports } from "./pages/Reports";
 import { Adjustments } from "./pages/Reports/Adjustments";
 import { Historical } from "./pages/Reports/Historical";
@@ -21,6 +22,7 @@ import { Simulator } from "./pages/Reports/Simulator";
 import { TradeCalendar } from "./pages/Reports/TradeCalendar";
 import { Trades } from "./pages/Reports/Trades";
 import { Watchlist } from "./pages/Reports/Watchlist";
+
 import { SignIn } from './pages/SignIn';
 import { SignUp } from './pages/SignUp';
 

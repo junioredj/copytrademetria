@@ -4,13 +4,13 @@ import { Gauge, SquaresFour } from "phosphor-react";
 import "jquery";
 import "jquery-ui-dist/jquery-ui";
 
-import { ResultBox } from "../../components/Reports/ResultBox";
-import { Section } from "../../components/Section";
-import { DataTables } from "../../components/DataTable";
+import { ResultBox } from "../../../components/Reports/ResultBox";
+import { Section } from "../../../components/Section";
+import { DataTables } from "../../../components/DataTable";
 
-import dadosFake from '../../components/DataTable/object.json';
+import dadosFake from '../../../components/DataTable/object.json';
 import { useForm } from "react-hook-form";
-import { GetTrades, getUserLocalStorage } from "../../context/AuthProvider/util";
+import { GetTrades, getUserLocalStorage } from "../../../context/AuthProvider/util";
 
 //dados fake
 const data01 = [

@@ -1,8 +1,8 @@
 import React from "react";
 import { Faders, Gauge } from "phosphor-react";
 
-import { ResultBox } from "../../components/Reports/ResultBox";
-import { Section } from "../../components/Section";
+import { ResultBox } from "../../../components/Reports/ResultBox";
+import { Section } from "../../../components/Section";
 
 export function Watchlist() {
   return (

@@ -1,30 +1,25 @@
 import { Gauge } from "phosphor-react";
 import React, { useState } from "react";
-import { FilterBox } from "../../components/Reports/FilterBox";
-import { ResultBox } from "../../components/Reports/ResultBox";
-import { Section } from "../../components/Section";
+import { FilterBox } from "../../../components/Reports/FilterBox";
+import { ResultBox } from "../../../components/Reports/ResultBox";
+import { Section } from "../../../components/Section";
 
-import { DataTables } from "../../components/DataTable";
+import { DataTables } from "../../../components/DataTable";
 import {
   GetTrades,
   getUserLocalStorage,
-} from "../../context/AuthProvider/util";
+} from "../../../context/AuthProvider/util";
 
 export function Order() {
-  const [data, setData] = useState([{}]);
+  const [data, setData] = useState([]);
 
   var email = getUserLocalStorage().email;
 
   const dados = GetTrades(email).then((t) => {
-
-
     if (t.length > 0) {
       setData(t);
     }
-
   });
-
-  console.log(data)
 
   return (
     <Section sectionName="orders" pageTitle="Relatório de Ordens">
@@ -125,7 +120,7 @@ export function Order() {
       </FilterBox>
 
       <ResultBox resultTitle="Mostrando todas as Ordens" Icon={Gauge}>
-        <DataTables data={data} tableId="table-orders" />
+        {data[0] && <DataTables data={data} tableId="table-orders" />}
       </ResultBox>
     </Section>
   );

@@ -1,9 +1,9 @@
 import React from 'react'
 import {SquaresFour} from 'phosphor-react';
 
-import { FilterBox } from '../../components/Reports/FilterBox'
-import { ResultBox } from '../../components/Reports/ResultBox'
-import { Section } from '../../components/Section'
+import { FilterBox } from '../../../components/Reports/FilterBox'
+import { ResultBox } from '../../../components/Reports/ResultBox'
+import { Section } from '../../../components/Section'
 
 export function TradeCalendar() {
   const conta = "Principal";

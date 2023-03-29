@@ -2,17 +2,17 @@ import React, { useState } from 'react'
 import Chart from 'react-apexcharts'
 import {SquaresFour } from 'phosphor-react';
 
-import { FilterBox } from '../../components/Reports/FilterBox'
-import { ResultBox } from '../../components/Reports/ResultBox'
-import { Section } from '../../components/Section'
-import { DataTables } from '../../components/DataTable';
+import { FilterBox } from '../../../components/Reports/FilterBox'
+import { ResultBox } from '../../../components/Reports/ResultBox'
+import { Section } from '../../../components/Section'
+import { DataTables } from '../../../components/DataTable';
 import {
   GetTrades,
   getUserLocalStorage,
-} from "../../context/AuthProvider/util";
+} from "../../../context/AuthProvider/util";
 
 //Fazer a requisição do PHP
-import dataTable from '../../components/DataTable/object.json'
+import dataTable from '../../../components/DataTable/object.json'
 
 export function Portfolio() {
   const [data, setData] = useState([{}]);

@@ -18,6 +18,12 @@ html,body{
         font-size: 55.5%;
     }
 }
+
+#root{
+    position: relative;
+    min-height: calc(100vh - 52px);
+}
+
 p,font,body,input,textarea,button{
     font-family: 'Nunito', sans-serif;
     font-weight: 400;
@@ -41,6 +47,9 @@ button{
 }
 
 footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
     .footer-msg{
         position: initial;
         display: flex;

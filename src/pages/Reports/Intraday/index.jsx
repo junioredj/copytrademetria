@@ -2,11 +2,9 @@ import React from "react";
 import Chart from "react-apexcharts";
 import { ChartBar, SquaresFour } from "phosphor-react";
 
-import { FilterBox } from "../../components/Reports/FilterBox";
-import { ResultBox } from "../../components/Reports/ResultBox";
-import { Section } from "../../components/Section";
-
-import IconStatistic from "../../img/Icon.png";
+import { FilterBox } from "../../../components/Reports/FilterBox";
+import { ResultBox } from "../../../components/Reports/ResultBox";
+import { Section } from "../../../components/Section";
 
 const BoxShape = ({ title, content }) => (
   <div className="box-statistic">

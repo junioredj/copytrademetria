@@ -2,11 +2,11 @@ import { Gauge, SquaresFour } from "phosphor-react";
 import React, { useState } from "react";
 import Chart from "react-apexcharts";
 
-import { FilterBox } from "../../components/Reports/FilterBox";
-import { ResultBox } from "../../components/Reports/ResultBox";
-import { Section } from "../../components/Section";
+import { FilterBox } from "../../../components/Reports/FilterBox";
+import { ResultBox } from "../../../components/Reports/ResultBox";
+import { Section } from "../../../components/Section";
 
-import dtTables from "../../components/DataTable/object.json";
+import dtTables from "../../../components/DataTable/object.json";
 
 const BoxShape = ({ title, content }) => (
   <div className="box-statistic">
