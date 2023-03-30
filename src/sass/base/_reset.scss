@@ -21,7 +21,8 @@ html,body{
 
 #root{
     position: relative;
-    min-height: calc(100vh - 52px);
+    padding-bottom: 6.2rem;
+    min-height: 100vh;
 }
 
 p,font,body,input,textarea,button{
@@ -46,7 +47,7 @@ button{
     outline: none;
 }
 
-footer{
+.footer{
     position: absolute;
     bottom: 0;
     width: 100%;

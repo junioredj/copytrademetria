@@ -55,8 +55,6 @@ export function DashboardApp (){
     //Obtem os dados da api
   const [resultArray, setData] = useState([]);
   GetResultYears(getUserLocalStorage().email).then(t => {setData(t)}); 
-    
-
 
     // (GetResultYears(getUserLocalStorage().email));
     return (
@@ -92,7 +90,11 @@ export function DashboardApp (){
             <div className="dash-resume">
                 <div className="container">
                     <div className="dash-result">
-                        <SaldoResume profit={resultArray.profit} date={`${resultArray.date}`}/>
+                        <SaldoResume 
+                            data={resultArray.year} 
+                            dataKey="va"
+                            profit={resultArray.profit} 
+                            date={`${resultArray.date}`}/>
 
                         <SaldoResumePeriodo 
                             periodo="dia" 
