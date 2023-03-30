@@ -9,6 +9,7 @@ import {
   GetTrades,
   getUserLocalStorage,
 } from "../../../context/AuthProvider/util";
+import { OrderTable } from "./OrderTable";
 
 export function Order() {
   const [data, setData] = useState([]);
@@ -120,7 +121,7 @@ export function Order() {
       </FilterBox>
 
       <ResultBox resultTitle="Mostrando todas as Ordens" Icon={Gauge}>
-        {data[0] && <DataTables data={data} tableId="table-orders" />}
+        <OrderTable/>
       </ResultBox>
     </Section>
   );

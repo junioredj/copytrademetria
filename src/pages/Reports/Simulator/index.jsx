@@ -6,11 +6,12 @@ import "jquery-ui-dist/jquery-ui";
 
 import { ResultBox } from "../../../components/Reports/ResultBox";
 import { Section } from "../../../components/Section";
-import { DataTables } from "../../../components/DataTable";
 
-import dadosFake from '../../../components/DataTable/object.json';
 import { useForm } from "react-hook-form";
-import { GetTrades, getUserLocalStorage } from "../../../context/AuthProvider/util";
+import {
+  GetTrades,
+  getUserLocalStorage,
+} from "../../../context/AuthProvider/util";
 import { Api } from "../../../services/api";
 import { Filter } from "./webrequest";
 
@@ -33,10 +34,12 @@ const data02 = [
 ];
 
 export function Simulator() {
-
-
-
-  const { register, handleSubmit, reset,formState:{ errors, isSubmitting }  } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm();
   const [dados, setDados] = useState([]);
 
   var email = getUserLocalStorage().email;
@@ -47,71 +50,66 @@ export function Simulator() {
     return res;
   }
 
-
-  
   //Função disparado do formulario
-  async function onSubmit(values) 
-  {
+  async function onSubmit(values) {
+    const promise = await new Promise((resolve) =>
+      setTimeout(() => {
+        Filter(
+          values.date,
+          values.type,
+          values.lado,
+          values.codigo,
+          values.tag
+        ).then((response) => {
+          // setTrade(response);
+          var objeto = JSON.parse(response);
+          resolve("helo");
 
-    const promise = await new Promise( (resolve) => setTimeout(() => {
-      
+          $(document).ready(function () {
+            $("#trades-table").DataTable({
+              data: objeto.trades,
+              scrollX: true,
+              responsive: true,
+              autoWidth: true,
+              bDestroy: true,
+              columns: [
+                { data: "codigo" },
+                { data: "lado" },
+                { data: "qty_compra" },
+                { data: "qty_venda" },
+                { data: "preco_compra" },
+                { data: "preco_venda" },
+                { data: "res_bruto" },
+                { data: "corretagem" },
+                { data: "taxas" },
+                { data: "res_liq" },
+                { data: "tags" },
+                { data: "pct" },
+                { data: "opcoes" },
+              ],
 
-    Filter(values.date, values.type, values.lado, values.codigo, values.tag).then(response => {
-      // setTrade(response);
-      var objeto = JSON.parse(response);
-      resolve('helo')
-
-      $(document).ready(function () {
-        $("#trades-table").DataTable({
-          data: objeto.trades,
-          scrollX: true,
-          responsive: true,
-          autoWidth: true,
-          bDestroy: true,
-          columns: [
-            { data: "codigo" },
-            { data: "lado" },
-            { data: "qty_compra" },
-            { data: "qty_venda" },
-            { data: "preco_compra" },
-            { data: "preco_venda" },
-            { data: "res_bruto" },
-            { data: "corretagem" },
-            { data: "taxas" },
-            { data: "res_liq" },
-            { data: "tags" },
-            { data: "pct" },
-            { data: "opcoes" },
-          ],
-    
-          language: {
-            lengthMenu: "Mostrar _MENU_ registro por página",
-            zeroRecords: "Nada encontrado",
-            info: "Mostrando a página _PAGE_ de _PAGES_",
-            infoEmpty: "Nenhum registro encontrado",
-            infoFiltered: "(  fffffffffffffffffff _MAX_ total records)",
-            search: "Pesquisar",
-            paginate: {
-              first: "Primeiro",
-              last: "Último",
-              next: "Próximo",
-              previous: "Anterior",
-            }
-          },
+              language: {
+                lengthMenu: "Mostrar _MENU_ registro por página",
+                zeroRecords: "Nada encontrado",
+                info: "Mostrando a página _PAGE_ de _PAGES_",
+                infoEmpty: "Nenhum registro encontrado",
+                infoFiltered: "(  fffffffffffffffffff _MAX_ total records)",
+                search: "Pesquisar",
+                paginate: {
+                  first: "Primeiro",
+                  last: "Último",
+                  next: "Próximo",
+                  previous: "Anterior",
+                },
+              },
+            });
+          });
         });
-      });
 
-      
-    });
-
-    // console.log(trades);
-    
-  }, 1000))
-    
-      
+        // console.log(trades);
+      }, 1000)
+    );
   }
-
-  
 
   const options = {
     chart: {
@@ -191,7 +189,6 @@ export function Simulator() {
 
   const series = [];
 
-
   //trazer informações do banco e adicionar no set() e deixar o = useState('')
   const [lpsimuladotrade, setLPSimuladoTrade] = useState("R$684,16");
   const [lprealtrade, setLPRealTrade] = useState("R$684,16");
@@ -200,17 +197,12 @@ export function Simulator() {
 
   const [qtdTrade, setQtdTrade] = useState("39");
 
-  const [data, setDate] = useState(dadosFake);
-
-
-
-
   return (
     <Section sectionName="simulator" pageTitle="Simulador de Resultados">
       <div className="card-box">
         <form onSubmit={handleSubmit(onSubmit)} className="filter-form">
           <div className="row">
-            <select name="select-date" id="select-date" {...register('date')}>
+            <select name="select-date" id="select-date" {...register("date")}>
               <option value="hoje">Hoje</option>
               <option value="ontem">Ontem</option>
               <option value="sete-dias">Últimos 7 dias</option>
@@ -221,17 +213,25 @@ export function Simulator() {
               <option value="tudo">Tudo</option>
             </select>
 
-            <select name="select-conta" id="select-conta" {...register('conta')}>
+            <select
+              name="select-conta"
+              id="select-conta"
+              {...register("conta")}
+            >
               <option value="contas">Todas as Contas</option>
               <option value="principal">Principal</option>
             </select>
 
-            <select name="tags" id="tags" {...register('tag')}>
+            <select name="tags" id="tags" {...register("tag")}>
               <option value=""></option>
               <option value="tags">tags</option>
             </select>
 
-            <select name="select-instrumento" id="select-instrumento" {...register('instrumento')}>
+            <select
+              name="select-instrumento"
+              id="select-instrumento"
+              {...register("instrumento")}
+            >
               <option value="instrumento">Instrumento</option>
               <option value="acoes">Ações</option>
               <option value="opcoes">Opções</option>
@@ -241,26 +241,34 @@ export function Simulator() {
               <option value="cfds">Cfds</option>
             </select>
 
-            <select name="select-type" id="select-type" {...register('type')}>
+            <select name="select-type" id="select-type" {...register("type")}>
               <option value="">Tipo</option>
               <option value="day-trader">Day Trader</option>
               <option value="swing-trader">Swing Trader</option>
               <option value="ambas">Ambas</option>
             </select>
 
-            <select name="select-lado" id="select-lado" {...register('lado')}>
+            <select name="select-lado" id="select-lado" {...register("lado")}>
               <option value="ambos">lado</option>
               <option value="compra">Compra</option>
               <option value="venda">Venda</option>
             </select>
 
-            <input type="text" placeholder="Código" {...register('codigo')} />
+            <input type="text" placeholder="Código" {...register("codigo")} />
           </div>
           <div className="row">
-            <input type="text" placeholder="Variação de Preço" {...register('variacao')} />
-            <input type="time" placeholder="Horário de" {...register('hrDe')} />
-            <input type="time" placeholder="Horário até" {...register('hrAte')} />
-            <input type="text" placeholder="% limite" {...register('pct')} />
+            <input
+              type="text"
+              placeholder="Variação de Preço"
+              {...register("variacao")}
+            />
+            <input type="time" placeholder="Horário de" {...register("hrDe")} />
+            <input
+              type="time"
+              placeholder="Horário até"
+              {...register("hrAte")}
+            />
+            <input type="text" placeholder="% limite" {...register("pct")} />
             {/* <select name="select-day" id="select-day" {...register('dia')}>
               <option value="">Dia</option>
               <option value="segunda">Segunda</option>
@@ -271,8 +279,12 @@ export function Simulator() {
               <option value="sabado">Sabado</option>
               <option value="domingo">Domingo</option>
             </select> */}
-            <button disabled={isSubmitting} className="btn-primary" type="submit">
-              {isSubmitting? 'Simulando...' : 'Simular'}
+            <button
+              disabled={isSubmitting}
+              className="btn-primary"
+              type="submit"
+            >
+              {isSubmitting ? "Simulando..." : "Simular"}
             </button>
             <button onClick={() => reset()}>Limpar</button>
           </div>
@@ -323,26 +335,25 @@ export function Simulator() {
       </ResultBox>
 
       <ResultBox resultTitle="Grafico de Resultados" Icon={SquaresFour}>
-        {/* <DataTables data={data} tableId='table-simulator' /> */}
         <table id="trades-table" className="stripe" style={{ width: "100%" }}>
-      <thead>
-        <tr>
-          <th>Codigo</th>
-          <th>Lado</th>
-          <th>Qtd Compra</th>
-          <th>Qtd Venda</th>
-          <th>Preço Compra</th>
-          <th>Preço Venda</th>
-          <th>Res Bruto</th>
-          <th>Corretagem</th>
-          <th>Taxas</th>
-          <th>Res Liq</th>
-          <th>Tags</th>
-          <th>Porcenteagem</th>
-          <th>Opções</th>
-        </tr>
-      </thead>
-    </table>
+          <thead>
+            <tr>
+              <th>Codigo</th>
+              <th>Lado</th>
+              <th>Qtd Compra</th>
+              <th>Qtd Venda</th>
+              <th>Preço Compra</th>
+              <th>Preço Venda</th>
+              <th>Res Bruto</th>
+              <th>Corretagem</th>
+              <th>Taxas</th>
+              <th>Res Liq</th>
+              <th>Tags</th>
+              <th>Porcenteagem</th>
+              <th>Opções</th>
+            </tr>
+          </thead>
+        </table>
       </ResultBox>
     </Section>
   );

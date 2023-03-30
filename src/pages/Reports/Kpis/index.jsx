@@ -1,12 +1,13 @@
 import { Gauge, SquaresFour } from "phosphor-react";
 import React, { useState } from "react";
-import Chart from "react-apexcharts";
 
 import { FilterBox } from "../../../components/Reports/FilterBox";
 import { ResultBox } from "../../../components/Reports/ResultBox";
 import { Section } from "../../../components/Section";
 
-import dtTables from "../../../components/DataTable/object.json";
+import { KpisTable } from "./KpisTable";
+import { ChartEvolutionPatrimonial } from "./ChartEvolutionPatrimonial";
+import { ChartPnlLiq } from "./ChartPnlLiq";
 
 const BoxShape = ({ title, content }) => (
   <div className="box-statistic">
@@ -17,168 +18,7 @@ const BoxShape = ({ title, content }) => (
   </div>
 );
 
-$(document).ready(function () {
-  $("#table-kpis").DataTable({
-    scrollX: true,
-    responsive: true,
-    autoWidth: true,
-    paging: false,
-    ordering: false,
-    searching: false,
-    lengthChange: false,
-    info: false,
-    ajax: "../../components/DataTable/object.json",
-    // columnDefs: [
-    //   {
-    //     target: 0,
-    //     visible: false,
-    //     searchable: false,
-    //   },
-    // ],
-  });
-});
-
 export function Kpis() {
-  const [data, setData] = useState(dtTables);
-
-  const series = [];
-
-  const options = {
-    chart: {
-      height: 321,
-      type: "line",
-      zoom: { enabled: 1 },
-      toolbar: { show: 1 },
-    },
-    stroke: { curve: "smooth", width: 2 },
-    fill: { opacity: 1 },
-    markers: { size: 0 },
-    colors: ["#3688fc", "#42d29d"],
-    xaxis: {
-      labels: { style: { colors: "#aab8c5" } },
-      tooltip: { style: { colors: "#aab8c5" } },
-    },
-    yaxis: [
-      {
-        title: { text: "R$" },
-        labels: {
-          formatter: function (o) {
-            return void 0 !== o ? "R$" + o.toFixed(2) : o;
-          },
-          style: { colors: "#aab8c5" },
-        },
-      },
-    ],
-    tooltip: {
-      shared: !0,
-      intersect: !1,
-      y: {
-        formatter: function (o) {
-          return void 0 !== o ? "R$" + o.toFixed(2) : o;
-        },
-      },
-    },
-    tooltip: {
-      shared: !0,
-      intersect: !1,
-      y: {
-        formatter: function (o) {
-          return void 0 !== o ? o.toFixed(0) + "" : o;
-        },
-      },
-    },
-    grid: {
-      row: { colors: ["transparent", "transparent"], opacity: 0.2 },
-      borderColor: "#aab8c5",
-    },
-    legend: { fontSize: "14px", fontFamily: "14px", offsetY: -10 },
-    responsive: [
-      {
-        breakpoint: 600,
-        options: { yaxis: { show: !1 }, legend: { show: !1 } },
-      },
-    ],
-  };
-
-  const seriesT = [];
-
-  const optionsT = {
-    chart: {
-      height: 321,
-      type: "line",
-      zoom: { enabled: 1 },
-      toolbar: { show: 1 },
-    },
-    dataLabels: { enabled: !1 },
-    colors: ['#3688fc','#42d29d'],
-    annotations: {
-      yaxis: [
-        {
-          y: 500.0,
-          borderColor: "#00E396",
-          label: {
-            borderColor: "#00E396",
-            style: {
-              color: "#fff",
-              background: "#00E396",
-            },
-            text: "Objetivo de ganhos diário R$500,00",
-          },
-        },
-        {
-          y: -100,
-          borderColor: "#fa5c7c",
-          label: {
-            borderColor: "#fa5c7c",
-            style: {
-              color: "#fff",
-              background: "#fa5c7c",
-            },
-            text: "Limite de perda diária R$-100,00",
-          },
-        },
-      ],
-    },
-    plotOptions: {
-      bar: {
-        colors: {
-          ranges: [{ from: -10000000, to: -0, color: "#fa5c7c" }],
-        },
-        columnWidth: "80%",
-      },
-    },
-    dataLabels: { enabled: !1 },
-    xaxis: {
-      labels:  { style: { colors: '#aab8c5'}},
-      tooltip: {style: { colors: '#aab8c5'}}
-    },
-    legend: { offsetY: -10 },
-    yaxis: [
-      {
-        title: { text: "R$" },
-        labels: {
-          formatter: function (o) {
-            return void 0 !== o ? "R$" + o.toFixed(2) : o;
-          },
-          style: { colors: "#aab8c5" }
-        },
-      },
-    ],
-    tooltip: {
-      shared: !0,
-      intersect: !1,
-      y: {
-        formatter: function (o) {
-          return void 0 !== o ? "R$" + o.toFixed(2) : o;
-        },
-      },
-    },
-    grid: {
-      row: { colors: ["transparent", "transparent"], opacity: 0.2 },
-      borderColor: "#aab8c5",
-    },
-  };
-
   return (
     <Section sectionName="kpis" pageTitle="Relatório de Desempenho">
       <FilterBox filterTitle="Filtrar">
@@ -292,6 +132,7 @@ export function Kpis() {
             content="R$707.826,23"
           />
         </div>
+        
         <h2>Métricas Financeiras</h2>
         <div className="shape-content kpis">
           <BoxShape title="Faturamento Líquido" content="R$23.789,67" />
@@ -329,32 +170,19 @@ export function Kpis() {
       {/* <ResultBox resultTitle="Seu Mês Atual" Icon={SquaresFour}></ResultBox> */}
 
       <ResultBox resultTitle="Relatório de Progresso Mensal" Icon={SquaresFour}>
-        <table id="table-kpis" className="cell-border" width={"100%"}>
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>L/P Líq</th>
-              <th>L/P Bruto</th>
-              <th>% de acerto</th>
-              <th>Fator Lucro</th>
-              <th>Volume</th>
-              <th>Total em Pontos</th>
-              <th>Trades</th>
-              <th>Posição Média</th>
-            </tr>
-          </thead>
-        </table>
+        <KpisTable />
       </ResultBox>
 
-      <ResultBox resultTitle="Evolução Patrimonial" Icon={SquaresFour}>
-        <Chart options={options} series={series} height={350} />
+      <ResultBox 
+        resultTitle="Evolução Patrimonial" 
+        Icon={SquaresFour} >
+        <ChartEvolutionPatrimonial/>
       </ResultBox>
 
       <ResultBox
         resultTitle="Pnl Líquido, Bruto e Pontos por Dia"
-        Icon={SquaresFour}
-      >
-        <Chart options={optionsT} series={seriesT} height={350} />
+        Icon={SquaresFour}>
+        <ChartPnlLiq/>
       </ResultBox>
     </Section>
   );

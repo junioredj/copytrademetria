@@ -1,11 +1,12 @@
 import React from "react";
-import { getTradesData } from "./getData";
+import {getOrderData} from './getData'
 
-export function TradesTable() {
-  getTradesData();
+export function OrderTable() {
+
+  getOrderData() 
   
   return (
-    <table id="trades-table" className="stripe" style={{ width: "100%" }}>
+    <table id="order-table" className="stripe" style={{ width: "100%" }}>
       <thead>
         <tr>
           <th>Codigo</th>
