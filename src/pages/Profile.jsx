@@ -110,7 +110,7 @@ export function Profile() {
                                     <div className="input-box">
                                         <label htmlFor="name">Nome</label>
                                         <input
-                                            value={getUserLocalStorage().nome}
+    
                                             type="text" 
                                             name="name" 
                                             id="name"
@@ -130,7 +130,7 @@ export function Profile() {
                                     <div className="input-box">
                                         <label htmlFor="email">E-mail</label>
                                         <input 
-                                        readOnly
+                                        
                                         type="email" 
                                         name="email" 
                                         id="email"

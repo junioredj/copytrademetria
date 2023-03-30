@@ -11,6 +11,8 @@ import { DataTables } from "../../../components/DataTable";
 import dadosFake from '../../../components/DataTable/object.json';
 import { useForm } from "react-hook-form";
 import { GetTrades, getUserLocalStorage } from "../../../context/AuthProvider/util";
+import { Api } from "../../../services/api";
+import { Filter } from "./webrequest";
 
 //dados fake
 const data01 = [
@@ -34,16 +36,82 @@ export function Simulator() {
 
 
 
+  const { register, handleSubmit, reset,formState:{ errors, isSubmitting }  } = useForm();
+  const [dados, setDados] = useState([]);
 
-  const { register, handleSubmit, reset } = useForm();
-
-  //Função disparado do formulario
-  async function onSubmit(values) {
-    console.log(values);
+  var email = getUserLocalStorage().email;
+  async function getTrades() {
+    const res = await Api.get("listar-operacoes.php?email=" + email).then(
+      (response) => setDados(response.data)
+    );
+    return res;
   }
 
-  const [dataSimulado, setDataSimulado] = useState(data01);
-  const [dataReal, setDataReal] = useState(data02);
+
+  
+  //Função disparado do formulario
+  async function onSubmit(values) 
+  {
+
+    const promise = await new Promise( (resolve) => setTimeout(() => {
+      
+
+    Filter(values.date, values.type, values.lado, values.codigo, values.tag).then(response => {
+      // setTrade(response);
+      var objeto = JSON.parse(response);
+      resolve('helo')
+
+      $(document).ready(function () {
+        $("#trades-table").DataTable({
+          data: objeto.trades,
+          scrollX: true,
+          responsive: true,
+          autoWidth: true,
+          bDestroy: true,
+          columns: [
+            { data: "codigo" },
+            { data: "lado" },
+            { data: "qty_compra" },
+            { data: "qty_venda" },
+            { data: "preco_compra" },
+            { data: "preco_venda" },
+            { data: "res_bruto" },
+            { data: "corretagem" },
+            { data: "taxas" },
+            { data: "res_liq" },
+            { data: "tags" },
+            { data: "pct" },
+            { data: "opcoes" },
+          ],
+    
+          language: {
+            lengthMenu: "Mostrar _MENU_ registro por página",
+            zeroRecords: "Nada encontrado",
+            info: "Mostrando a página _PAGE_ de _PAGES_",
+            infoEmpty: "Nenhum registro encontrado",
+            infoFiltered: "(  fffffffffffffffffff _MAX_ total records)",
+            search: "Pesquisar",
+            paginate: {
+              first: "Primeiro",
+              last: "Último",
+              next: "Próximo",
+              previous: "Anterior",
+            }
+          },
+        });
+      });
+
+      
+    });
+
+    // console.log(trades);
+    
+  }, 1000))
+    
+      
+  }
+
+  
 
   const options = {
     chart: {
@@ -137,54 +205,8 @@ export function Simulator() {
 
 
 
-
-  var email = getUserLocalStorage().email;
-
-  /*const dados = GetTrades(email).then((t) => {
-
-
-    if (t.length > 0) {
-      setDate(t);
-    }
-
-  });*/
-
-  var table = $('#table-simulator').dataTable();
-  var oSettings = table.fnSettings();
-
-  table.fnClearTable(this);
-  table.DataTable().destroy();
-  table.find('tbody').append([{
-    "id": 8,
-    "dt_abertura": "2023-01-23 11:50:44",
-    "dt_fechamento": "2023-01-23 12:31:34",
-    "codigo": "WING23asdf",
-    "lado": "C",
-    "qty_compra": 1,
-    "qty_venda": 1,
-    "preco_compra": 113070,
-    "preco_venda": 113575,
-    "res_bruto": 101,
-    "corretagem": "R$0",
-    "taxas": "R$0",
-    "res_liq": 101,
-    "tags": null,
-    "pct": "%",
-    "opcoes": " "
-  }]);
-  table.DataTable({
-    "responsive": true,
-    "autoWidth": false,
-    "ordering": false,
-    "info": true,
-    "pageLength": 10,
-    "bDestroy": true,
-    "recordsFiltered": 10,
-  }).draw();
-
-
   return (
-    <Section sectionName="simulator" pageTitle="Simulador de Resulatados">
+    <Section sectionName="simulator" pageTitle="Simulador de Resultados">
       <div className="card-box">
         <form onSubmit={handleSubmit(onSubmit)} className="filter-form">
           <div className="row">
@@ -227,7 +249,7 @@ export function Simulator() {
             </select>
 
             <select name="select-lado" id="select-lado" {...register('lado')}>
-              <option value="">lado</option>
+              <option value="ambos">lado</option>
               <option value="compra">Compra</option>
               <option value="venda">Venda</option>
             </select>
@@ -239,7 +261,7 @@ export function Simulator() {
             <input type="time" placeholder="Horário de" {...register('hrDe')} />
             <input type="time" placeholder="Horário até" {...register('hrAte')} />
             <input type="text" placeholder="% limite" {...register('pct')} />
-            <select name="select-day" id="select-day" {...register('dia')}>
+            {/* <select name="select-day" id="select-day" {...register('dia')}>
               <option value="">Dia</option>
               <option value="segunda">Segunda</option>
               <option value="terca">Terça</option>
@@ -248,11 +270,11 @@ export function Simulator() {
               <option value="sexta">Sexta</option>
               <option value="sabado">Sabado</option>
               <option value="domingo">Domingo</option>
-            </select>
-            <button className="btn-primary" type="submit">
-              Simular
+            </select> */}
+            <button disabled={isSubmitting} className="btn-primary" type="submit">
+              {isSubmitting? 'Simulando...' : 'Simular'}
             </button>
-            <button onClick={reset()}>Limpar</button>
+            <button onClick={() => reset()}>Limpar</button>
           </div>
         </form>
       </div>
@@ -301,7 +323,26 @@ export function Simulator() {
       </ResultBox>
 
       <ResultBox resultTitle="Grafico de Resultados" Icon={SquaresFour}>
-        <DataTables data={data} tableId='table-simulator' />
+        {/* <DataTables data={data} tableId='table-simulator' /> */}
+        <table id="trades-table" className="stripe" style={{ width: "100%" }}>
+      <thead>
+        <tr>
+          <th>Codigo</th>
+          <th>Lado</th>
+          <th>Qtd Compra</th>
+          <th>Qtd Venda</th>
+          <th>Preço Compra</th>
+          <th>Preço Venda</th>
+          <th>Res Bruto</th>
+          <th>Corretagem</th>
+          <th>Taxas</th>
+          <th>Res Liq</th>
+          <th>Tags</th>
+          <th>Porcenteagem</th>
+          <th>Opções</th>
+        </tr>
+      </thead>
+    </table>
       </ResultBox>
     </Section>
   );

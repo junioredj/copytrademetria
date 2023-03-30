@@ -20,12 +20,13 @@ export function TradesTable() {
 
   $(document).ready(function () {
     $("#trades-table").DataTable({
-      ajax: {
+      data: data,
+      /*ajax: {
         //recomendado Variaveis ambientes
-        url: "https://tradersdash.com.br/api/listar-operacoes.php?email=kevinwilliam@gmail.com",
+        url:  "https://tradersdash.com.br/api/listar-operacoes.php?email=kevinwilliam@gmail.com",
         type: "GET",
         dataSrc: "",
-      },
+      },*/
       scrollX: true,
       responsive: true,
       autoWidth: true,
