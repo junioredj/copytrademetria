@@ -1,5 +1,5 @@
 import { Gauge, SquaresFour } from "phosphor-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { FilterBox } from "../../../components/Reports/FilterBox";
 import { ResultBox } from "../../../components/Reports/ResultBox";
@@ -8,6 +8,11 @@ import { Section } from "../../../components/Section";
 import { KpisTable } from "./KpisTable";
 import { ChartEvolutionPatrimonial } from "./ChartEvolutionPatrimonial";
 import { ChartPnlLiq } from "./ChartPnlLiq";
+import { getDesempenho } from "./webrequest";
+import {
+  GetTrades,
+  getUserLocalStorage,
+} from "../../../context/AuthProvider/util";
 
 const BoxShape = ({ title, content }) => (
   <div className="box-statistic">
@@ -19,6 +24,17 @@ const BoxShape = ({ title, content }) => (
 );
 
 export function Kpis() {
+  const [json, setJson] = useState([]);
+  useEffect(()=>{
+
+  
+    
+    var email = getUserLocalStorage().email;
+    getDesempenho(email).then((response) =>{
+      setJson(JSON.parse(response));
+    });
+  }, []);
+
   return (
     <Section sectionName="kpis" pageTitle="Relatório de Desempenho">
       <FilterBox filterTitle="Filtrar">
@@ -89,80 +105,80 @@ export function Kpis() {
       <ResultBox resultTitle="Mostrando todos os Trades" Icon={Gauge}>
         <h2>Métrica de Desempenho</h2>
         <div className="shape-content kpis">
-          <BoxShape title="Fator de Lucro (líq/bruto)" content="2.63 / 2.65" />
-          <BoxShape title="Expectativa por trade" content="R$684,04" />
-          <BoxShape title="% de acerto" content="58.97%" />
-          <BoxShape title="% de acerto diário" content="58%" />
-          <BoxShape title="Rebaixamento máximo" content="R$-6.019,62" />
-          <BoxShape title="Compras/Vendas" content="33 / 6" />
-          <BoxShape title="L/P Comprado" content="R$29.576,42" />
-          <BoxShape title="L/P Vendido" content="R$-2.894,08" />
-          <BoxShape title="Melhor Trade" content="R$14.495,81" />
-          <BoxShape title="Pior Trade" content="R$-3.880,88" />
-          <BoxShape title="Média de Ganhos" content="R$1.870,14" />
-          <BoxShape title="Média de Perdas " content="R$-1.020,68" />
-          <BoxShape title="Total de Trades" content="39" />
+          <BoxShape title="Fator de Lucro (líq/bruto)" content={json.fator_lucro} />
+          <BoxShape title="Expectativa por trade" content="---" />
+          <BoxShape title="% de acerto" content={`${json.pct_acerto}%`} />
+          <BoxShape title="% de acerto diário" content={`${json.pct_acerto_dia}%`} />
+          <BoxShape title="Rebaixamento máximo" content={`R$${json.rebaixamento_maximo}`} />
+          <BoxShape title="Compras/Vendas" content={`${json.qtd_compra} / ${json.qtd_venda}`} />
+          <BoxShape title="L/P Comprado" content={`R$${json.lp_comprado}`} />
+          <BoxShape title="L/P Vendido" content={`R$${json.lp_vendido}`} />
+          <BoxShape title="Melhor Trade" content={`R$${json.melhor_trade}`} />
+          <BoxShape title="Pior Trade" content={`R$${json.pior_trade}`} />
+          <BoxShape title="Média de Ganhos" content={`R$${json.media_ganho}`} />
+          <BoxShape title="Média de Perdas " content={`R$${json.media_perda}`} />
+          <BoxShape title="Total de Trades" content={json.total_operacoes} />
           <BoxShape
             title="Tempo méd em trades com lucro"
-            content="130d 19h31m46s"
+            content="---"
           />
           <BoxShape
             title="Tempo méd em trades com preju."
-            content="92d 2h18m37s"
+            content="---"
           />
-          <BoxShape title="Razão tempo méd L/P" content="1,42" />
-          <BoxShape title="Total em Pontos" content="-1.193,79" />
-          <BoxShape title="Méd de ptos por trade" content="-30,61" />
-          <BoxShape title="Total em Pontos + qtd" content="26.915,7" />
-          <BoxShape title="Méd de ptos por trade + qtd" content="690,15" />
+          <BoxShape title="Razão tempo méd L/P" content="---" />
+          <BoxShape title="Total em Pontos" content={json.total_pontos} />
+          <BoxShape title="Méd de ptos por trade" content={json.media_pontos_trade} />
+          <BoxShape title="Total em Pontos + qtd" content={json.media_pontos_qtd} />
+          <BoxShape title="Méd de ptos por trade + qtd" content="---" />
           <BoxShape
             title="Projeção de L/P próximos 30 dias"
-            content="R$30.219,32"
+            content="---"
           />
           <BoxShape
             title="Projeção de L/P próximos 100 dias"
-            content="R$45.221,81"
+            content="---"
           />
           <BoxShape
             title="Projeção de L/P próx. 100 trades"
-            content="R$92.193,33"
+            content="----"
           />
           <BoxShape
             title="Projeção de L/P próx. 1000 trades"
-            content="R$707.826,23"
+            content="---"
           />
         </div>
         
         <h2>Métricas Financeiras</h2>
         <div className="shape-content kpis">
-          <BoxShape title="Faturamento Líquido" content="R$23.789,67" />
-          <BoxShape title="Média diária líq" content="R$214,32" />
-          <BoxShape title="Faturamento Bruto" content="R$24.070,39" />
-          <BoxShape title="Média diária bruto" content="R$216,85" />
-          <BoxShape title="Lucro líq total" content="R$43.013,28" />
-          <BoxShape title="Preju. líq total" content="R$-16.330,94" />
-          <BoxShape title="Lucro brutal total" content="R$43.194,05" />
-          <BoxShape title="Preju. bruto total" content="R$-16.287,4" />
-          <BoxShape title="Saldo em conta" content="R$23.789,67" />
-          <BoxShape title="Total de Saídas" content="R$0" />
-          <BoxShape title="Total de Entradas" content="R$0" />
-          <BoxShape title="Média líq por trade" content="R$609,99" />
+          <BoxShape title="Faturamento Líquido" content={`R$${json.lucro_liquido}`} />
+          <BoxShape title="Média diária líq" content={`R$${json.media_dia_liq}`} />
+          <BoxShape title="Faturamento Bruto" content={`R$${json.lucro_bruto}`} />
+          <BoxShape title="Média diária bruto" content={`R$${json.media_dia_bruto}`} />
+          <BoxShape title="Lucro líq total" content={`R$${json.lucro_liquido}`} />
+          <BoxShape title="Preju. líq total" content="---" />
+          <BoxShape title="Lucro brutal total" content={`R$${json.lucro_bruto}`} />
+          <BoxShape title="Preju. bruto total" content={`R$${json.perda_bruta}`} />
+          <BoxShape title="Saldo em conta" content={`R$${json.lucro_liquido}`} />
+          <BoxShape title="Total de Saídas" content="---" />
+          <BoxShape title="Total de Entradas" content="----" />
+          <BoxShape title="Média líq por trade" content="----" />
         </div>
         <h2>Métricas de Volume</h2>
         <div className="shape-content kpis">
-          <BoxShape title="Total de Trades" content="39" />
-          <BoxShape title="Volume Total" content="38.736" />
-          <BoxShape title="Volume Médio Dia" content="348,97" />
-          <BoxShape title="Posição Média" content="497" />
+          <BoxShape title="Total de Trades" content={json.total_operacoes} />
+          <BoxShape title="Volume Total" content={json.volume_negociado} />
+          <BoxShape title="Volume Médio Dia" content={json.volume_medio_dia} />
+          <BoxShape title="Posição Média" content={json.volume_posicao_media} />
         </div>
         <h2>Métricas de Custos</h2>
         <div className="shape-content kpis">
-          <BoxShape title="Corretagem Total" content="R$0" />
-          <BoxShape title="Corretagem Média Diária" content="R$0" />
-          <BoxShape title="Total em Taxas de negociação" content="R$280,71" />
+          <BoxShape title="Corretagem Total" content="---" />
+          <BoxShape title="Corretagem Média Diária" content="---" />
+          <BoxShape title="Total em Taxas de negociação" content="---" />
           <BoxShape
             title="Média Diária em Taxas de negociação"
-            content="R$2,53"
+            content="---"
           />
         </div>
       </ResultBox>
@@ -170,13 +186,13 @@ export function Kpis() {
       {/* <ResultBox resultTitle="Seu Mês Atual" Icon={SquaresFour}></ResultBox> */}
 
       <ResultBox resultTitle="Relatório de Progresso Mensal" Icon={SquaresFour}>
-        <KpisTable />
+        <KpisTable dados={json.mes} />
       </ResultBox>
 
       <ResultBox 
         resultTitle="Evolução Patrimonial" 
         Icon={SquaresFour} >
-        <ChartEvolutionPatrimonial/>
+        <ChartEvolutionPatrimonial dados={json.evolucao_patrimonial}/>
       </ResultBox>
 
       <ResultBox

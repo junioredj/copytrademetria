@@ -9,12 +9,27 @@ import { DataTables } from "../../../components/DataTable";
 
 //Fazer a requisição do PHP
 import dataTable from "../../../components/DataTable/object.json";
+import { HistoricalTable } from "./HistoricalTable";
+import { getHistorical } from "./webrequest"
+import {
+  getUserLocalStorage,
+} from "../../../context/AuthProvider/util";
 
 export function Historical() {
   const [data, setData] = useState(dataTable);
 
-  const conta = "Principal";
+  const [json, setJson] = useState([]);
+  useEffect(()=>{
 
+  
+    
+    var email = getUserLocalStorage().email;
+    getHistorical(email).then((response) =>{
+      setJson(JSON.parse(response));
+    });
+  }, []);
+  const conta = "Principal";
+  
   const seriesLiq = [
     {
       name: "L/P Dia",
@@ -237,28 +252,42 @@ export function Historical() {
     ],
   };
 
-  const seriesMes = [
+  var seriesMes = [
     {
       name: "Res Líq",
-      data: [
-        0.0, 0.0, -229.07745454, -1452.325, -617.54063636, -1343.89918182,
-        -793.12, -350.44, 26.868, -187.87, 6237.235, 5459.22059259,
-        4653.70566667, 210.45333333, 1791.17, -62.536, 456.68933333,
-        3399.72468687, 2687.257, -4553.294, 0.0, 793.31727273, 0.0,
-        -2259.64215584, 4447.39690909, 9465.04438239, -2217.81, -1770.853,
-      ],
+      data: [],
     },
     {
       name: "Res Bruto",
-      data: [
-        0.0, 0.0, -202.54545454, -1446.32, -616.36363636, -1338.33818182,
-        -791.76, -350.0, 29.2, -186.0, 6262.25, 5474.79259259, 4664.66666667,
-        231.03333333, 1798.0, -56.0, 476.08333333, 3417.46868687, 2692.0,
-        -4549.0, 0.0, 799.72727273, 0.0, -2247.84415584, 4465.09090909,
-        9521.24538239, -2212.0, -1765.0,
-      ],
+      data: [],
     },
   ];
+
+  var categorias = [];
+  try
+  {
+    if(typeof json.chart.bruto !== "undefined") 
+    {
+      seriesMes = [
+        {
+          name: "Res Líq",
+          data: json.chart.liquido,
+        },
+        {
+          name: "Res Bruto",
+          data: json.chart.bruto,
+        },
+      ];    
+
+      categorias = json.chart.data;
+    }
+  }
+  catch(erro)
+  {
+
+  }
+  // console.log(json.chart);
+  
   const optionsMes = {
     chart: {
       height: 380,
@@ -308,36 +337,7 @@ export function Historical() {
       labels: { style: { colors: "#aab8c5" } },
       tooltip: { style: { colors: "#aab8c5" } },
 
-      categories: [
-        "1/2020",
-        "2/2020",
-        "3/2020",
-        "4/2020",
-        "5/2020",
-        "6/2020",
-        "7/2020",
-        "8/2020",
-        "9/2020",
-        "10/2020",
-        "11/2020",
-        "12/2020",
-        "1/2021",
-        "2/2021",
-        "3/2021",
-        "4/2021",
-        "5/2021",
-        "6/2021",
-        "7/2021",
-        "8/2021",
-        "9/2021",
-        "10/2021",
-        "11/2021",
-        "12/2021",
-        "1/2022",
-        "2/2022",
-        "10/2022",
-        "11/2022",
-      ],
+      categories: categorias,
     },
     legend: {
       offsetY: -10,
@@ -363,6 +363,8 @@ export function Historical() {
       borderColor: "#f1f3fa",
     },
   };
+
+  var id = "table-historical";
 
   return (
     <Section sectionName="historical" pageTitle="Histórico">
@@ -397,14 +399,14 @@ export function Historical() {
         resultTitle={`Relatório diário para conta ${conta}`}
         Icon={SquaresFour}
       >
-        <DataTables data={data} tableId="table-historical-dia" />
+        <HistoricalTable dados={json.dia} tableId="table-historical-dia" />
       </ResultBox>
 
       <ResultBox
         resultTitle={`Relatório mensal para conta ${conta}`}
         Icon={SquaresFour}
       >
-        <DataTables data={data} tableId="table-historical-mes" />
+        <HistoricalTable dados={json.mes} tableId="table-historical-mes" />
       </ResultBox>
 
       <ResultBox

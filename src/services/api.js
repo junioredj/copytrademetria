@@ -1,5 +1,5 @@
 import axios from "axios";
 export const Api = axios.create({
     // URL da Api de Autenticação //
-    baseURL: "https://tradersdash.com.br/api/",//"http://localhost/tradersdash/api/",//
+    baseURL: "http://localhost/tradersdash/api/",//"https://tradersdash.com.br/api/"
 });

@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import { ChartBar, SquaresFour } from "phosphor-react";
 
 import { FilterBox } from "../../../components/Reports/FilterBox";
 import { ResultBox } from "../../../components/Reports/ResultBox";
 import { Section } from "../../../components/Section";
+import { getDayTrade } from "./webrequest";
+import {
+  getUserLocalStorage,
+} from "../../../context/AuthProvider/util";
 
 const BoxShape = ({ title, content }) => (
   <div className="box-statistic">
@@ -16,22 +20,66 @@ const BoxShape = ({ title, content }) => (
 );
 
 export function Intraday() {
-  const seriesCD = [
-    {
-      name: "L/P Líq Cumulativo",
-      type: "line",
-      data: [],
-    },
-    {
-      name: "L/P Líq por trade",
-      type: "line",
-      data: [],
-    },
-    {
-      name: "Pontos por trade",
-      data: [],
-    },
-  ];
+
+
+  var seriesGP = [];
+  var  seriesCV = [10, 2];
+  var seriesCD = [];
+  var  seriesTD = [];
+
+  var ativo_melhor_trade;
+  var ativo_pior_trade;
+  var lucro_melhor_trade = 0;
+  var perda_pior_trade = 0;
+
+  const [json, setJson] = useState([]);
+
+  useEffect(()=>{
+
+  
+    
+    var email = getUserLocalStorage().email;
+    getDayTrade(email).then((response) =>{
+      setJson(JSON.parse(response));
+
+    });
+  }, []);
+
+  try
+  {
+    seriesCV = json.pieCV;
+    seriesGP = json.pieGP;
+    ativo_melhor_trade = json.melhor_trade.ativo;
+    lucro_melhor_trade = json.melhor_trade.lucro;
+
+    ativo_pior_trade = json.pior_trade.ativo;
+    perda_pior_trade = json.pior_trade.lucro;
+    seriesCD = [
+      {
+        name: "L/P Líq por trade",
+        type: "line",
+        data: json.lucro_liquido_trade,
+      },
+      {
+        name: "Pontos por trade",
+        data: json.pontos_por_trade,
+      },
+    ];
+
+    seriesTD = [
+      {
+        name: "Lucro",
+        type: "line",
+        data: json.trades,
+      },
+    ];
+  }
+  catch(error)
+  {
+
+  }
+
+  
 
   const optionsCD = {
     chart: { height: 321, type: "line", toolbar: { show: !1 } },
@@ -66,7 +114,7 @@ export function Intraday() {
     ],
   };
 
-  const seriesTD = [];
+  
 
   const optionsGP = {
     chart: { height: 320, type: "pie" },
@@ -90,7 +138,7 @@ export function Intraday() {
       },
     ],
   };
-  const seriesGP = [10, 5];
+  
 
   const optionsCV = {
     chart: { height: 320, type: "pie" },
@@ -114,7 +162,7 @@ export function Intraday() {
       },
     ],
   };
-  const seriesCV = [10, 2];
+  
 
   return (
     <Section sectionName="intraday" pageTitle="Relatório Daytrader">
@@ -149,14 +197,14 @@ export function Intraday() {
 
       <ResultBox resultTitle="Relatório DayTrader" Icon={SquaresFour}>
         <div className="shape-content">
-          <BoxShape title="L/P Líq" content="R$-1.770,85" />
-          <BoxShape title="Res Bruto" content="R$-1.765,00" />
-          <BoxShape title="Fator Lucro" content="0,00" />
-          <BoxShape title="% de acerto" content="0,00 %" />
-          <BoxShape title="Total de Trades" content="1" />
-          <BoxShape title="Média líq por trade" content="R$-1.770,85" />
-          <BoxShape title="Quantidade" content="1.000,0" />
-          <BoxShape title="Corretagem+Taxa" content="R$2,66" />
+          <BoxShape title="L/P Líq" content={`R$${json.lucro_liquido}`}/>
+          <BoxShape title="Res Bruto" content={`R$${json.lucro_bruto}`} />
+          <BoxShape title="Fator Lucro" content={`${json.fator_lucro}`} />
+          <BoxShape title="% de acerto" content={`${json.pct_acerto}%`} />
+          <BoxShape title="Total de Trades" content={`${json.total_trades}`} />
+          <BoxShape title="Média líq por trade" content={`R$${json.media_liq_trade}`} />
+          <BoxShape title="Quantidade" content={`${json.volume_total}`}/>
+          <BoxShape title="Corretagem+Taxa" content="---" />
         </div>
       </ResultBox>
 
@@ -182,11 +230,13 @@ export function Intraday() {
             <tr>
               <th>Instrumento</th>
               <th>R$</th>
-              <th>R$ por Trade</th>
             </tr>
           </thead>
           <tbody>
-            
+            <tr>
+                <td>{ativo_melhor_trade}</td>
+                <td>R${lucro_melhor_trade.toFixed(2)}</td>
+            </tr>
           </tbody>
         </table>
       </ResultBox>
@@ -197,14 +247,12 @@ export function Intraday() {
             <tr>
               <th>Instrumento</th>
               <th>R$</th>
-              <th>R$ por Trade</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>MGLU3</td>
-              <td>R$-1.770,85</td>
-              <td>R$-1.770,85 (1 trds)</td>
+              <td>{ativo_pior_trade}</td>
+              <td>{perda_pior_trade != 0? perda_pior_trade: ""}</td>
             </tr>
           </tbody>
         </table>

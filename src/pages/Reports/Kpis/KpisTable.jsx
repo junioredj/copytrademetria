@@ -1,6 +1,6 @@
 import React from "react";
 
-export function KpisTable() {
+export function KpisTable(dados) {
 
   $(document).ready(function () {
     $("#table-kpis").DataTable({
@@ -60,7 +60,11 @@ export function KpisTable() {
     });
   });
 
+
+  var dados  = dados.dados;
+
   return (
+
     <table id="table-kpis" className="stripe" width={"100%"}>
       <thead>
         <tr>
@@ -75,6 +79,22 @@ export function KpisTable() {
           <th>Posição Média</th>
         </tr>
       </thead>
+      <tbody>
+        {
+
+          typeof dados === "undefined"? "": Object.keys(dados).map((innerAttr, index) => {
+            return (
+            <tr><td>{dados[innerAttr].mes}</td><td>{`R$${dados[innerAttr].lucro_liquido}`}</td><td>{`R$${dados[innerAttr].lucro_bruto}`}</td><td>{`${dados[innerAttr].acerto}`}</td><td>{`${dados[innerAttr].fator_lucro}`}</td><td>{dados[innerAttr].volume}</td><td>{dados[innerAttr].pontos}</td><td>{dados[innerAttr].trades}</td><td>---</td></tr>
+               // <option key={index} value={(dados[innerAttr].mes)  }>  {(tags[innerAttr].tag)}</option>
+          )})
+            
+        }
+      </tbody>
     </table>
   );
 }
+/*
+Object.keys(dados).map((innerAttr, index) => {
+              return (
+                  console.log(dados[innerAttr].mes)// <option key={index} value={(dados[innerAttr].mes)  }>  {(tags[innerAttr].tag)}</option>
+            )})*/

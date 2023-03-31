@@ -13,7 +13,8 @@ import {
   getUserLocalStorage,
 } from "../../../context/AuthProvider/util";
 import { Api } from "../../../services/api";
-import { Filter } from "./webrequest";
+import { Filter , GetTags } from "./webrequest";
+import { array } from "yup";
 
 //dados fake
 const data01 = [
@@ -34,6 +35,8 @@ const data02 = [
 ];
 
 export function Simulator() {
+
+  let myJSON={"attr1":"abcdef", "attr2":"12345", "attr3":"hello"};
   const {
     register,
     handleSubmit,
@@ -41,14 +44,19 @@ export function Simulator() {
     formState: { errors, isSubmitting },
   } = useForm();
   const [dados, setDados] = useState([]);
+  const [tags, setTags] = useState([]);
+
+  useEffect(()=>{
+    GetTags(email).then((response)=>{
+      setTags(JSON.parse(response));
+    })
+  }, []);
+
+  console.log(dados);
+
+
 
   var email = getUserLocalStorage().email;
-  async function getTrades() {
-    const res = await Api.get("listar-operacoes.php?email=" + email).then(
-      (response) => setDados(response.data)
-    );
-    return res;
-  }
 
   //Função disparado do formulario
   async function onSubmit(values) {
@@ -59,11 +67,15 @@ export function Simulator() {
           values.type,
           values.lado,
           values.codigo,
-          values.tag
+          values.tag,
+          email
         ).then((response) => {
           // setTrade(response);
           var objeto = JSON.parse(response);
           resolve("helo");
+
+          setDados([objeto.chart_lucro]);//[{data:[1,3,5]}])
+
 
           $(document).ready(function () {
             $("#trades-table").DataTable({
@@ -106,12 +118,16 @@ export function Simulator() {
           });
         });
 
-        // console.log(trades);
+
       }, 1000)
     );
   }
 
   const options = {
+    series: [{
+            name: "Desktops",
+            data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+        }],
     chart: {
       height: 321,
       type: "line",
@@ -187,6 +203,8 @@ export function Simulator() {
     ],
   };
 
+    
+
   const series = [];
 
   //trazer informações do banco e adicionar no set() e deixar o = useState('')
@@ -222,9 +240,21 @@ export function Simulator() {
               <option value="principal">Principal</option>
             </select>
 
+            
+
+                
+
             <select name="tags" id="tags" {...register("tag")}>
               <option value=""></option>
-              <option value="tags">tags</option>
+              {
+
+
+                Object.keys(tags).map((innerAttr, index) => {
+                  return (
+                      <option key={index} value={(tags[innerAttr].tag)  }>  {(tags[innerAttr].tag)}</option>
+                )})
+              }
+
             </select>
 
             <select
@@ -331,7 +361,10 @@ export function Simulator() {
       </div>
 
       <ResultBox resultTitle="Grafico do Resultado" Icon={Gauge}>
-        <Chart options={options} series={series} type="line" height={350} />
+      
+]
+        <Chart options={options} series={dados} type="line" height={350} />
+        
       </ResultBox>
 
       <ResultBox resultTitle="Grafico de Resultados" Icon={SquaresFour}>
