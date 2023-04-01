@@ -1,7 +1,29 @@
 import React, { useEffect, useRef } from 'react'
 
 export function Calendar({mes, ano}) {
-    const data = [2, 12, 26, 30];
+    const data = [
+        {
+            dia: 1,
+            resultado: -1765.00,
+            quantidade: 1000.00,
+            trades: 1,
+            mensagem: "Perda máxima atingida"
+        },
+        {
+            dia: 18,
+            resultado: -1765.00,
+            quantidade: 1000.00,
+            trades: 1,
+            mensagem: "Perda máxima atingida"
+        },
+        {
+            dia: 29,
+            resultado: -1765.00,
+            quantidade: 1000.00,
+            trades: 1,
+            mensagem: "Perda máxima atingida"
+        }
+    ]
 
     const monthsBr = ['Janeiro', 'Fevereiro', 'Março', 'Abril','Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outrubro', 'Novembro', 'Dezembro'];
     const tableDays = useRef(null);
@@ -32,14 +54,14 @@ export function Calendar({mes, ano}) {
 
 
             data.map(dia => {
-                if(i > 1 && i < getLastDayThisMonth && dt === dia){
+                if(i > 0 && i < getLastDayThisMonth && dt === dia.dia){
             console.log(new Date())
 
                     let info = `<span>
-                                    <p>Resultado: R$-1.765,00</p>
-                                    <p>Quantidade: 1.000,00</p>
-                                    <p>Trades: 1</p>
-                                    <small>Perda máxima atingida</small>
+                                    <p>Resultado: R$ ${dia.resultado}</p>
+                                    <p>Quantidade: ${dia.quantidade}</p>
+                                    <p>Trades: ${dia.trades}</p>
+                                    <small>${dia.mensagem}</small>
                                 </span>`;
                     dayTables.innerHTML += info;
                     dayTables.classList.add('result-negative')
