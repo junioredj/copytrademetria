@@ -1,0 +1,54 @@
+.calendar{
+    width: 100%;
+    margin-top: 2rem;
+    
+    h4{
+        font-size: 2rem;
+    }
+    
+    .table-calendar{
+        margin-top: 2rem;
+
+        .table{
+            width: 100%;
+            border-spacing: 1rem;
+
+
+            th{
+                display: table-cell;
+                padding: 1.6rem;
+                
+                font-size: 1.8rem;
+            }
+
+            td{
+                display: table-cell;
+                text-align: center;
+                padding: 1.6rem;
+            }
+
+            .mes-anterior,.proximo-mes{
+                color: $gray-dark-100;
+            }
+
+            th,td{
+                border-top: solid 1px $gray-dark-200;
+            }
+
+            .result-negative{
+                background-color: $brand-color-red;
+                text-align: left;
+                p{
+                    font-size: 1.2rem;
+                }
+                small{
+                    font-size: 1rem;
+                    background-color: $brand-color-yellow;
+                    color: $white-color;
+                    padding: .2rem .4rem;
+                    border-radius: 4px;
+                }
+            } // Quando tiver alguma info no dia respectivo.
+        }
+    }
+}
