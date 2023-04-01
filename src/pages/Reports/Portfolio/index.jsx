@@ -117,7 +117,7 @@ export function Portfolio() {
       </FilterBox>
 
       <ResultBox resultTitle={`POSIÇÕES EM ABERTO PARA CONTA ${conta}`} Icon={SquaresFour}>
-        <DataTables data={data} tableId="table-portfolio" />
+        { data[0] && <DataTables data={data} tableId="table-portfolio" />}
       </ResultBox>
 
       <div className="chart-content-portfolio"> 

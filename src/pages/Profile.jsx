@@ -120,7 +120,6 @@ export function Profile() {
                                         <label htmlFor="surname">Sobrenome</label>
                                         <input 
                                         type="text" 
-                                        value={getUserLocalStorage().sobrenome}
                                         name="surname" 
                                         id="surname"
                                         {...register('surname')} />
@@ -130,7 +129,7 @@ export function Profile() {
                                     <div className="input-box">
                                         <label htmlFor="email">E-mail</label>
                                         <input 
-                                        
+                                        disabled
                                         type="email" 
                                         name="email" 
                                         id="email"

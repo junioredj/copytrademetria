@@ -361,10 +361,7 @@ export function Simulator() {
       </div>
 
       <ResultBox resultTitle="Grafico do Resultado" Icon={Gauge}>
-      
-]
-        <Chart options={options} series={dados} type="line" height={350} />
-        
+        <Chart options={options} series={dados} type="line" height={350} /> 
       </ResultBox>
 
       <ResultBox resultTitle="Grafico de Resultados" Icon={SquaresFour}>
