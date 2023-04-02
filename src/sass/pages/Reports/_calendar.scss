@@ -38,12 +38,31 @@
             .result-negative{
                 background-color: $brand-color-red;
                 text-align: left;
+                color: white;
                 p{
+                    color: white;
                     font-size: 1.2rem;
                 }
                 small{
                     font-size: 1rem;
                     background-color: $brand-color-yellow;
+                    color: $white-color;
+                    padding: .2rem .4rem;
+                    border-radius: 4px;
+                }
+            } // Quando tiver alguma info no dia respectivo.
+
+            .result-positive{
+                background-color: $brand-color-green;
+                text-align: left;
+                color: white;
+                p{
+                    font-size: 1.2rem;
+                    color: white;
+                }
+                small{
+                    font-size: 1rem;
+                    background-color: lime;
                     color: $white-color;
                     padding: .2rem .4rem;
                     border-radius: 4px;

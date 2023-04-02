@@ -1,29 +1,33 @@
 import React, { useEffect, useRef } from 'react'
 
-export function Calendar({mes, ano}) {
-    const data = [
-        {
-            dia: 1,
-            resultado: -1765.00,
-            quantidade: 1000.00,
-            trades: 1,
-            mensagem: "Perda máxima atingida"
-        },
-        {
-            dia: 18,
-            resultado: -1765.00,
-            quantidade: 1000.00,
-            trades: 1,
-            mensagem: "Perda máxima atingida"
-        },
-        {
-            dia: 29,
-            resultado: -1765.00,
-            quantidade: 1000.00,
-            trades: 1,
-            mensagem: "Perda máxima atingida"
-        }
-    ]
+export function 
+Calendar({mes, ano, dados}) {
+    var data = dados;
+    // [
+    //     {
+    //         dia: 1,
+    //         resultado: -1765.00,
+    //         quantidade: 1000.00,
+    //         trades: 1,
+    //         mensagem: "Perda máxima atingida"
+    //     },
+    //     {
+    //         dia: 18,
+    //         resultado: -1765.00,
+    //         quantidade: 1000.00,
+    //         trades: 1,
+    //         mensagem: "Perda máxima atingida"
+    //     },
+    //     {
+    //         dia: 29,
+    //         resultado: -1765.00,
+    //         quantidade: 1000.00,
+    //         trades: 1,
+    //         mensagem: "Perda máxima atingida"
+    //     }
+    // ]
+
+    
 
     const monthsBr = ['Janeiro', 'Fevereiro', 'Março', 'Abril','Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outrubro', 'Novembro', 'Dezembro'];
     const tableDays = useRef(null);
@@ -55,7 +59,6 @@ export function Calendar({mes, ano}) {
 
             data.map(dia => {
                 if(i > 0 && i < getLastDayThisMonth && dt === dia.dia){
-            console.log(new Date())
 
                     let info = `<span>
                                     <p>Resultado: R$ ${dia.resultado}</p>
@@ -64,14 +67,18 @@ export function Calendar({mes, ano}) {
                                     <small>${dia.mensagem}</small>
                                 </span>`;
                     dayTables.innerHTML += info;
-                    dayTables.classList.add('result-negative')
+                    if(parseFloat(dia.resultado) > 0)
+                        dayTables.classList.add('result-positive')
+                    else
+                    {
+                        dayTables.classList.add('result-negative')
+                    }
                 }
             });
         };
     }
 
     useEffect( () => {
-        console.log('Atualizou')
         GetDaysCalendar(mes-1,ano);
     } ,[mes, ano, monthCurrent]);
 
