@@ -1,38 +1,18 @@
 import React, { useEffect, useRef } from 'react'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const MySwal = withReactContent(Swal)
 
 export function 
 Calendar({mes, ano, dados}) {
-    var data = dados;
-    // [
-    //     {
-    //         dia: 1,
-    //         resultado: -1765.00,
-    //         quantidade: 1000.00,
-    //         trades: 1,
-    //         mensagem: "Perda máxima atingida"
-    //     },
-    //     {
-    //         dia: 18,
-    //         resultado: -1765.00,
-    //         quantidade: 1000.00,
-    //         trades: 1,
-    //         mensagem: "Perda máxima atingida"
-    //     },
-    //     {
-    //         dia: 29,
-    //         resultado: -1765.00,
-    //         quantidade: 1000.00,
-    //         trades: 1,
-    //         mensagem: "Perda máxima atingida"
-    //     }
-    // ]
-
-    
+    var data = dados;    
 
     const monthsBr = ['Janeiro', 'Fevereiro', 'Março', 'Abril','Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outrubro', 'Novembro', 'Dezembro'];
     const tableDays = useRef(null);
     const monthCurrent = useRef();
     const yearCurrent = useRef();
+    const dialog = useRef();
 
     function GetDaysCalendar(mes, ano){
         monthCurrent.current.innerHTML = monthsBr[mes];
@@ -50,16 +30,16 @@ Calendar({mes, ano, dados}) {
             dayTables.classList.remove('mes-anterior');
             dayTables.classList.remove('proximo-mes');
             dayTables.classList.remove('result-negative');
+            dayTables.classList.remove('result-positive');
             
             dayTables.innerHTML = dt;
 
             if(i < 1){  dayTables.classList.add('mes-anterior');}
             if(i > getLastDayThisMonth){ dayTables.classList.add('proximo-mes');}
 
-
             data.map(dia => {
-                if(i > 0 && i < getLastDayThisMonth && dt === dia.dia){
 
+                if(i > 0 && i < getLastDayThisMonth && dt === dia.dia){
                     let info = `<span>
                                     <p>Resultado: R$ ${dia.resultado}</p>
                                     <p>Quantidade: ${dia.quantidade}</p>
@@ -67,6 +47,17 @@ Calendar({mes, ano, dados}) {
                                     <small>${dia.mensagem}</small>
                                 </span>`;
                     dayTables.innerHTML += info;
+                    dayTables.addEventListener('click', () => {
+                       MySwal.fire(
+                        <span>
+                            <h4>Resultados do dia {dia.dia}</h4>
+                            <p>Resultado: R$ {dia.resultado}</p>
+                            <p>Quantidade: {dia.quantidade}</p>
+                            <p>Trades: {dia.trades}</p>
+                            <small>{dia.mensagem}</small>
+                        </span>
+                       );
+                    })
                     if(parseFloat(dia.resultado) > 0)
                         dayTables.classList.add('result-positive')
                     else
@@ -86,7 +77,7 @@ Calendar({mes, ano, dados}) {
   return (
     <div className='calendar'>
         <h4>Mês de <span ref={monthCurrent}></span> de <span ref={yearCurrent}></span></h4>
-
+        
         <div className="table-calendar">
             <table className="table">
                 <thead>

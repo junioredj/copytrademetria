@@ -8,10 +8,11 @@
     
     .table-calendar{
         margin-top: 2rem;
+        overflow-x: overlay;
 
         .table{
             width: 100%;
-            border-spacing: 1rem;
+            border-spacing: .1rem;
 
 
             th{
@@ -38,9 +39,9 @@
             .result-negative{
                 background-color: $brand-color-red;
                 text-align: left;
-                color: white;
+                color: $white-color;
                 p{
-                    color: white;
+                    color: $white-color;
                     font-size: 1.2rem;
                 }
                 small{
@@ -55,19 +56,30 @@
             .result-positive{
                 background-color: $brand-color-green;
                 text-align: left;
-                color: white;
+                color: $white-color;
                 p{
                     font-size: 1.2rem;
                     color: white;
                 }
                 small{
                     font-size: 1rem;
-                    background-color: lime;
+                    background-color: $brand-color-green;
                     color: $white-color;
                     padding: .2rem .4rem;
                     border-radius: 4px;
                 }
             } // Quando tiver alguma info no dia respectivo.
+
+            @include responsive(600px){
+                border-spacing: .4rem;
+                
+                th,td{
+                    padding: .8rem;
+                }
+                span{
+                    display: none;
+                }
+            }
         }
     }
 }

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {Faders, SquaresFour} from 'phosphor-react';
+import { Faders, SquaresFour } from "phosphor-react";
 
-import { FilterBox } from '../../../components/Reports/FilterBox'
-import { ResultBox } from '../../../components/Reports/ResultBox'
-import { Section } from '../../../components/Section'
-import { Calendar } from './Calendar';
-import { useForm } from 'react-hook-form';
+import { FilterBox } from "../../../components/Reports/FilterBox";
+import { ResultBox } from "../../../components/Reports/ResultBox";
+import { Section } from "../../../components/Section";
+import { Calendar } from "./Calendar";
+import { useForm } from "react-hook-form";
 import { getDaysCalendar } from "./webrequest";
 import {
   GetTrades,
@@ -13,22 +13,16 @@ import {
 } from "../../../context/AuthProvider/util";
 
 export function TradeCalendar() {
-
   const [json, setJson] = useState([]);
   var email = getUserLocalStorage().email;
   var dados;
-  useEffect(()=>{
 
-  
-    
-    
-    getDaysCalendar(email).then((response) =>{
+  useEffect(() => {
+    getDaysCalendar(email).then((response) => {
       setJson(JSON.parse(response));
-      
     });
   }, []);
 
-  
   const {
     register,
     handleSubmit,
@@ -36,42 +30,26 @@ export function TradeCalendar() {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  
-
-  async function FilterSubmit(values){
-    const promisse = await new Promise ( (resolver) => 
-      setTimeout( () => {
-
-
-        getDaysCalendar(email, values.date).then((response) =>{
-          
+  async function FilterSubmit(values) {
+    console.log(values.date)
+    const promisse = await new Promise((resolver) =>
+      setTimeout(() => {
+        getDaysCalendar(email, values.date).then((response) => {
           setJson(JSON.parse(response));
-          resolver('helo')
-          
+          resolver("helo");
         });
-
-        
       }, 1000)
     );
-
   }
 
-  
-
-
-  try
-  {
+  try {
     dados = json;
-  }
-  catch(error)
-  {
-
-  }
+  } catch (error) {}
 
   const conta = "Principal";
 
   return (
-    <Section sectionName='trade-calendar' pageTitle='Calendário de Trades'>
+    <Section sectionName="trade-calendar" pageTitle="Calendário de Trades">
       <div className="filter">
         <div className="card-box ">
           <div className="box-title">
@@ -79,9 +57,17 @@ export function TradeCalendar() {
             <h6>Filtrar</h6>
           </div>
           <div className="box-content">
-            <form onSubmit={handleSubmit(FilterSubmit)} className='filter-form' action="">
+            <form
+              onSubmit={handleSubmit(FilterSubmit)}
+              className="filter-form"
+              action=""
+            >
               <div className="row">
-                <select name="select-date" id="select-date" {...register("date")}>
+                <select
+                  name="select-date"
+                  id="select-date"
+                  {...register("date")}
+                >
                   <option value="hoje">Hoje</option>
                   <option value="ontem">Ontem</option>
                   <option value="sete-dias">Últimos 7 dias</option>
@@ -109,28 +95,26 @@ export function TradeCalendar() {
                   {isSubmitting ? "Filtrando..." : "Filtrar"}
                 </button>
                 <button onClick={() => reset()}>Limpar</button>
-
               </div>
             </form>
           </div>
         </div>
       </div>
-      
-      <ResultBox resultTitle={`Calendário de Trades para conta ${conta}`} Icon={SquaresFour}>
 
-        {/* {console.log("_____")} */}
-        {/* <Calendar mes={3} ano={2023} dados={dados}/> */}
-        {
-          Object.keys(dados).map((innerAttr, index) => {
-            // console.log(new Date(Object.keys(dados)[index]).getMonth() + 1);
-          return <Calendar mes={new Date(Object.keys(dados)[index]).getMonth() + 1} ano={2023} dados={Object.values(dados)[index]}/>
-
-          })
-        }
-        {/* {
-          Date.getMonth(Date.parse( console.log(Object.keys(dados)[0])))} */}
-        {/* <Calendar mes={4} ano={2023} dados={dados}/> */}
+      <ResultBox
+        resultTitle={`Calendário de Trades para conta ${conta}`}
+        Icon={SquaresFour}
+      >
+        {Object.keys(dados).map((innerAttr, index) => {
+          return (
+            <Calendar
+              mes={new Date(Object.keys(dados)[index]).getMonth() + 1}
+              ano={2023}
+              dados={Object.values(dados)[index]}
+            /> || <span>Erro</span>
+          );
+        })}
       </ResultBox>
     </Section>
-  )
+  );
 }
