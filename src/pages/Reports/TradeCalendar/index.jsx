@@ -111,7 +111,7 @@ export function TradeCalendar() {
               mes={new Date(Object.keys(dados)[index]).getMonth() + 1}
               ano={2023}
               dados={Object.values(dados)[index]}
-            /> || <span>Erro</span>
+            />
           );
         })}
       </ResultBox>

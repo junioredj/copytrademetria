@@ -1,6 +1,7 @@
 .shape {
     @include flex(row, center, space-between);
-    height: 15.3rem;
+    position: relative;
+    // height: 15.3rem;
     width: 100%;
     padding: 2.4rem;
     gap: 2.4rem;
@@ -40,10 +41,12 @@
         height: 100%;
     }
 
-    @include responsive(500px) {
+    @include responsive(680px) {
         flex-wrap: wrap;
         height: 100%;
         justify-content: center;
+
+        
     }
 
     @include responsive(1000px) {

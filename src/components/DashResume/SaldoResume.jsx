@@ -11,8 +11,8 @@ export function SaldoResume({profit, date, data, dataKey}) {
                 <small>no dia {date}</small>
             </div>
             <div className="resume-chart">
-                <ResponsiveContainer width="100%" height="100%">
-                    <BarChart width={100} height={3} data={data}>
+                <ResponsiveContainer width="100%" height={100}>
+                    <BarChart width='100%' height='100%' data={data}>
                     <Tooltip />
                     <Bar dataKey={dataKey} barSize={18} fill="#3688FC" />
                     </BarChart>
