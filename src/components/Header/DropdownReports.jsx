@@ -31,7 +31,7 @@ export function DropdownReports() {
         <Link to="/relatorios/historico"> Histórico de Desempenho</Link>
         <Link to="/relatorios/portfolio"> Minha Custódia</Link>
         <Link to="/relatorios/daytrader"> Relatório DayTrader</Link>
-        <Link to="/relatorios/lancamentos"> Relatório de Lançamentos </Link>
+        {/* <Link to="/relatorios/lancamentos"> Relatório de Lançamentos </Link> */}
         <Link to="/relatorios/calendario-trades"> Calendário de Trades </Link>
         <Link to="/relatorios/ativos"> Lista de Ativos </Link>
       </div>

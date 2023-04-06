@@ -7,7 +7,7 @@ export function DashStatistic (fator){
             <div className="box-statistic">
                 <div className="statistic">
                     <span>Fator de Lucro</span>
-                    <h6>{fator.fator}</h6>
+                    <strong>{fator.fator}</strong>
                     <div className="box-info">
                         <span>Bom</span>
                         <span>Aumente seu capital</span>
@@ -20,7 +20,7 @@ export function DashStatistic (fator){
             <div className="box-statistic">
                 <div className="statistic">
                     <span>Fator de Lucro</span>
-                    <h6>{fator.fator}</h6>
+                    <strong>{fator.fator}</strong>
                     <div className="box-info">
                         <span>Bom</span>
                         <span>Aumente seu capital</span>
@@ -33,7 +33,7 @@ export function DashStatistic (fator){
             <div className="box-statistic">
                 <div className="statistic">
                     <span>Fator de Lucro</span>
-                    <h6>{fator.fator}</h6>
+                    <strong>{fator.fator}</strong>
                     <div className="box-info">
                         <span>Bom</span>
                         <span>Aumente seu capital</span>
@@ -46,7 +46,7 @@ export function DashStatistic (fator){
             <div className="box-statistic">
                 <div className="statistic">
                     <span>Fator de Lucro</span>
-                    <h6>{fator.fator}</h6>
+                    <strong>{fator.fator}</strong>
                     <div className="box-info">
                         <span>Bom</span>
                         <span>Aumente seu capital</span>

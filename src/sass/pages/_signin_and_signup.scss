@@ -25,6 +25,12 @@
         background: $brand-color-blue;
         border-radius: 4px 4px 0px 0px;
 
+        .logo{
+            img{
+                width: 15rem;
+            }
+        }
+
         h2 {
             font-weight: 600;
             font-size: 4.2rem;

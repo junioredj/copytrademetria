@@ -3,7 +3,8 @@ import { Link, redirect, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import LogoHeader from "../img/logo.png";
+
+import LogoHeader from "../img/LOGO3.png";
 
 import { useAuth } from "../context/AuthProvider/useAuth";
 
@@ -34,16 +35,16 @@ export function SignIn({ openModal }) {
 
     async function onSubmit({email, password}) {
 
-      /*var promise = new Promise( (resolve) => setTimeout(() => {
-        return resolve({resolve: Authenticated(email, password)});
-      }, 500))
+      // const promise = new Promise( (resolve) => setTimeout(() => {
+      //   return resolve('helo');
+      // }, 500))
 
-      const printAddress = async () => {
-        const a = await promise;
-        console.log(a);
-      };
+      // const printAddress = async () => {
+      //   const a = await promise;
+      //   console.log(a);
+      // };
       
-      printAddress();*/
+      // printAddress();
 
       const p = Promise.resolve(Authenticated(email, password));
 
@@ -52,7 +53,9 @@ export function SignIn({ openModal }) {
 
         if(value == true)
         {
+          setTimeout( () => {
             navigate("/");
+          }, 2000)
         }
 
 

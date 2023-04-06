@@ -16,6 +16,10 @@ header{
         .logo{
             display: flex;
             align-items: center;
+
+            img{
+                width: 15rem;
+            }
         }
         
         .search-content{

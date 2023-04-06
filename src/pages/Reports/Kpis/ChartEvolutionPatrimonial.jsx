@@ -2,13 +2,8 @@ import React from "react";
 import Chart from "react-apexcharts";
 
 export function ChartEvolutionPatrimonial(dados) {
-  const series = [];
 
   const options = {
-    series: [{
-            name: "Desktops",
-            data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
-        }],
     chart: {
       height: 321,
       type: "line",
@@ -32,7 +27,13 @@ export function ChartEvolutionPatrimonial(dados) {
     },
     colors: ["#3688fc", "#42d29d"],
     xaxis: {
-      labels: { style: { colors: "#aab8c5" } },
+      labels: { 
+
+        style: { 
+          colors: "#aab8c5" ,
+        
+        } 
+      },
       tooltip: { style: { colors: "#aab8c5" } },
     },
     yaxis: [
@@ -62,7 +63,7 @@ export function ChartEvolutionPatrimonial(dados) {
         colors: ["transparent", "transparent"],
         opacity: 0.2,
       },
-      borderColor: "#f1f3fa",
+      borderColor: "#474d56",
     },
     legend: {
       fontSize: "14px",
@@ -84,4 +85,5 @@ export function ChartEvolutionPatrimonial(dados) {
     ],
   };
   return <Chart options={options} series={[{"data": dados.dados}]} type="line" height={350} />
+  
 }

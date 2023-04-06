@@ -9,48 +9,6 @@ import { ChartEvolucaoPatrimonioLancamento } from "../components/Charts/ChartEvo
 import { getUserLocalStorage, GetResultYears} from "../context/AuthProvider/util";
 
 
-
-const data = [
-    {
-        mes: "Valor",
-        vd: 578.24,
-        vm: 1078.24,
-        va: 2678.24,
-    },
-    {
-        mes: "Valor",
-        vd: 1978.24,
-        vm: 2978.24,
-        va: 2078.24,
-    },
-    {
-        mes: "Valor",
-        vd: 1078.24,
-        vm: 1578.24,
-        va: 2678.24,
-    },
-    {
-        mes: "Valor",
-        vd: 578.24,
-        vm: 2078.24,
-        va: 3078.24,
-    },
-    {
-        mes: "Valor",
-        vd: 1078.24,
-        vm: 2078.24,
-        va: 4078.24,
-    },
-    {
-        mes: "Valor",
-        vd: 1978.24,
-        vm: 2678.24,
-        va: 3678.24,
-    },
-    
-];
-
-
 export function DashboardApp (){
     //Obtem os dados da api
   const [resultArray, setData] = useState([]);
@@ -71,15 +29,15 @@ export function DashboardApp (){
                             <SquaresFour size={20} fill='#fff' weight="bold"/>
                             <span>Relatório de Desempenho</span>
                         </Link>
-                        <Link to='/relatorios/instrumentos' >
+                        <Link to='/relatorios/simulador' >
                             <SquaresFour size={20} fill='#fff' weight="bold"/>
-                            <span>Relatório por instrumento</span>
+                            <span>Simulador de Resultados</span>
                         </Link>
-                        <Link to='/relatorios/calendario-custodias' >
+                        <Link to='/relatorios/calendario-trades' >
                             <SquaresFour size={20} fill='#fff' weight="bold"/>
-                            <span>Calendário de Cústódia</span>
+                            <span>Calendário de Trades</span>
                         </Link>
-                        <Link to='/relatorios/custodias' >
+                        <Link to='/relatorios/portfolio' >
                             <SquaresFour size={20} fill='#fff' weight="bold"/>
                             <span>Minhas custódias</span>
                         </Link>

@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { DropdownProfile } from "../Profile/DropdownProfile";
 import { Navbar } from "./Navbar";
 
-import LogoHeader from "../../img/logo.png";
+import LogoHeader from "../../img/LOGO2.png";
 import BtnMobile from "../../img/btn-mobile.svg";
 import { useEffect } from "react";
 
@@ -39,7 +39,7 @@ export function Header() {
           <div className="left-area">
             <div className="logo">
               <Link to="/dashboard">
-                <img src={LogoHeader} alt="Logo Dashboard" />
+                <img src={LogoHeader} alt="Logo Dashboard"/>
               </Link>
             </div>
             <div className="profile">

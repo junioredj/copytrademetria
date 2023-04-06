@@ -70,7 +70,7 @@ export function RoutesApp(){
                                 <Route path="/relatorios/historico" element={<Historical/>} />
                                 <Route path="/relatorios/portfolio" element={<Portfolio/>} />
                                 <Route path="/relatorios/daytrader" element={<Intraday/>} />
-                                <Route path="/relatorios/lancamentos" element={<Adjustments/>} />
+                                {/* <Route path="/relatorios/lancamentos" element={<Adjustments/>} /> */}
                                 <Route path="/relatorios/calendario-trades" element={<TradeCalendar/>} />
                                 <Route path="/relatorios/ativos" element={<Watchlist/>} />
                             </Route>

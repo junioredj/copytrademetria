@@ -14,25 +14,9 @@ import {
 } from "../../../context/AuthProvider/util";
 import { Api } from "../../../services/api";
 import { Filter , GetTags } from "./webrequest";
-import { array } from "yup";
 
-//dados fake
-const data01 = [
-  18.686, 82.257, 541.147, 1252.628, 2761.104, 2799.841, 2568.401, 2477.987,
-  -813.41, -1163.85, -1136.982, 351.204, 2910.735, 4259.484, 3979.044, 4138.604,
-  7481.024, 7600.915, 7230.618, 6823.768, 6730.062, 9695.647, 9205.207,
-  10062.904, 11892.464, 11220.05, 7339.17, 7000.105, 6793.472, 7372.646,
-  9265.331, 9269.461, 23765.274, 27790.213, 29920.957, 28283.1, 30671.004,
-  28453.194, 26682.341,
-];
-const data02 = [
-  18.686, 82.257, 541.147, 1252.628, 2761.104, 2799.841, 2568.401, 2477.987,
-  -813.41, -1163.85, -1136.982, 351.204, 2910.735, 4259.484, 3979.044, 4138.604,
-  7481.024, 7600.915, 7230.618, 6823.768, 6730.062, 9695.647, 9205.207,
-  10062.904, 11892.464, 11220.05, 7339.17, 7000.105, 6793.472, 7372.646,
-  9265.331, 9269.461, 23765.274, 27790.213, 29920.957, 28283.1, 30671.004,
-  28453.194, 26682.341,
-];
+
+
 
 export function Simulator() {
 
@@ -52,7 +36,6 @@ export function Simulator() {
     })
   }, []);
 
-  console.log(dados);
 
 
 
@@ -124,10 +107,6 @@ export function Simulator() {
   }
 
   const options = {
-    series: [{
-            name: "Desktops",
-            data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
-        }],
     chart: {
       height: 321,
       type: "line",
@@ -181,7 +160,7 @@ export function Simulator() {
         colors: ["transparent", "transparent"],
         opacity: 0.2,
       },
-      borderColor: "#f1f3fa",
+      borderColor: "#474d56",
     },
     legend: {
       fontSize: "14px",
@@ -203,9 +182,6 @@ export function Simulator() {
     ],
   };
 
-    
-
-  const series = [];
 
   //trazer informações do banco e adicionar no set() e deixar o = useState('')
   const [lpsimuladotrade, setLPSimuladoTrade] = useState("R$684,16");
@@ -364,7 +340,7 @@ export function Simulator() {
         <Chart options={options} series={dados} type="line" height={350} /> 
       </ResultBox>
 
-      <ResultBox resultTitle="Grafico de Resultados" Icon={SquaresFour}>
+      <ResultBox resultTitle="Tabela de Resultados" Icon={SquaresFour}>
         <table id="trades-table" className="stripe" style={{ width: "100%" }}>
           <thead>
             <tr>

@@ -77,7 +77,7 @@ export function ChartPnlLiq() {
     },
     grid: {
       row: { colors: ["transparent", "transparent"], opacity: 0.2 },
-      borderColor: "#aab8c5",
+      borderColor: "#474d56",
     },
   };
 

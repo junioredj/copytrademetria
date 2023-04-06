@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useAuth } from "../context/AuthProvider/useAuth";
-import LogoHeader from "../img/logo.png";
+import LogoHeader from "../img/LOGO3.png";
 
 import { Footer } from "../components/Footer";
 import { Button } from "../components/Form/Button";
